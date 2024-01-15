@@ -1,6 +1,16 @@
 <script lang="ts" setup>
 import { ref,reactive } from 'vue'
 
+
+import {requestPack} from "../utils/requests.js";
+const getTableData = async ()=>{
+
+  // let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
+  let res= await requestPack.get(``)
+  // console.log(res)
+}
+getTableData()
+
 defineProps({
   msg: String,
 })
@@ -15,6 +25,7 @@ const SqlStatement = reactive({
 
 const onSubmit = () => {
   console.log('submit!')
+  console.log(SqlStatement.content)
 }
 
 
