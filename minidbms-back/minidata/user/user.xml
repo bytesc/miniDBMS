@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<users> 
+  <user id="1" name="root" password="root"/>  
+  <user id="2" name="lca" password="lca"/>  
+  <user id="3" name="lerry" password="lerry"/>  
+  <user id="4" name="tjh" password="1q2w3e4r5t,"/>
+</users>
