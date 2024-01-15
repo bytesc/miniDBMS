@@ -65,9 +65,15 @@ public class PassingParametersFactory {
             if (list.size() > 1) {
                 System.out.println("3)调用方法：查询指定记录");
                 String tableName = list.get(0).get(1);
+                String tableName2 = list.get(0).size() > 2 ? list.get(0).get(2) : null;
+                System.out.println("Table names: " + tableName);
                 List<String> condition = list.get(1);
-                Sct_Tb_Dt.select(Use_Db.dbName, tableName, null, condition);
-
+                if (tableName2!=null) {
+                    List<String> tableNames = Arrays.asList(tableName, tableName2);
+                    Sct_Tb_Dt.select2(Use_Db.dbName, tableNames, null, condition);
+                } else {
+                    Sct_Tb_Dt.select(Use_Db.dbName, tableName, null, condition);
+                }
             }
             else {
                 System.out.println("3)调用方法：查询所有记录");
