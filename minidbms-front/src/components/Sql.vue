@@ -41,6 +41,7 @@ const getTableData = async ()=>{
   let res= await requestPack.get(`/mydbms/index?statement=${SqlStatement.content}`)
   console.log(res)
   tableData.value = res.msg
+  console.log(tableData.value)
 }
 // getTableData()
 

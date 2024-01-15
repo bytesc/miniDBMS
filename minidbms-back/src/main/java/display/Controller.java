@@ -21,7 +21,9 @@ public class Controller {
 
     @RequestMapping("/index")
     public ResponseVO index(String statement) throws DocumentException, IOException {
+
         ResponseVO responseVO = new ResponseVO(statement, login.work(statement));
+
         return responseVO;
     }
 
