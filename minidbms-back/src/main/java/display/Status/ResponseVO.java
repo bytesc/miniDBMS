@@ -1,4 +1,4 @@
-package com.rybin.display.Status;
+package display.Status;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
