@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Lg {
-    public static void main(String[] args) throws IOException, DocumentException {
-
+    public static Object main(String statement) throws IOException, DocumentException {
+            Object returnVal = null;
 
 //        System.out.println("欢迎进入My-Simple-Dbms,请先登录");
 //        //声明一个变量a，记录用户输入错误次数，超过3此则退出系统
@@ -54,10 +54,10 @@ public class Lg {
 
         Use_Db.dbName = "test";
         while (true) {
-            System.out.println("请输入SQL语句：（您可以输入help以查询SQL语句帮助）");
+            //System.out.println("请输入SQL语句：（您可以输入help以查询SQL语句帮助）");
             @SuppressWarnings("resource")
-            Scanner input = new Scanner(System.in);
-            String sql = input.nextLine();
+            //Scanner input = new Scanner(System.in);
+            String sql = statement;
 //            /*
 //             * 预处理:获得语句;
 //             * 处理前后空格;
@@ -73,9 +73,9 @@ public class Lg {
                 continue;
             }
 
-            while (sql.lastIndexOf(";") != sql.length() - 1) {
-                sql = sql + " " + input.nextLine();
-            }
+//            while (sql.lastIndexOf(";") != sql.length() - 1) {
+//                sql = sql + " " + input.nextLine();
+//            }
 
             sql = sql.trim(); // 去除字符串两侧的空白字符
             sql = sql.toLowerCase();//全部转为小写
@@ -87,7 +87,7 @@ public class Lg {
             List<List<String>> parameter_list = new ArrayList<List<String>>();//缓存sql body信息的list
 
             if (sql.equals("quit ENDOFSQL")) {
-                return;
+                return "退出";
             } else {
                 //将预处理后的SQL语句匹配SQL正则表达式，返回含有SQL的body信息的List
                 try {
@@ -98,13 +98,13 @@ public class Lg {
                 }
                 //根据SQL的body部分，调用相应的功能模块
                 try {
-                    PassingParametersFactory.dealParameters(parameter_list);
+                    returnVal = PassingParametersFactory.dealParameters(parameter_list);
                 } catch (Exception e) {
                     e.printStackTrace();//异常处理，不用管
                 }
             }
 
-
+        return returnVal;
         }
     }
 

@@ -10,7 +10,9 @@ import java.util.*;
  */
 public class PassingParametersFactory {
 
-    public static void dealParameters(List<List<String>> list) throws IOException, DocumentException {//将语句预处理后，生成的结果
+    public static Object dealParameters(List<List<String>> list) throws IOException, DocumentException {//将语句预处理后，生成的结果
+        Object returnVal = null;
+
         List<String> ls = new ArrayList<String>();
         ls = list.get(0);//一开始的肯定是处理语句
 //--------------------------------------------------------------------------------------------------------------------------------------
@@ -32,7 +34,7 @@ public class PassingParametersFactory {
         }
         else if (sql_key.equals("show databases")) {
             System.out.println("3)调用方法：列出所有数据库");
-            Show_Db.showDatabase();
+            returnVal = Show_Db.showDatabase();
         }
         else if (sql_key.equals("show tables")) {
             System.out.println("3)调用方法：列出所有表");
@@ -44,7 +46,7 @@ public class PassingParametersFactory {
             //if database illegal
             if (!Is_Lg.isDatabase()) {
                 Use_Db.dbName = null;
-                return;
+                return returnVal;
             }
 
         }
@@ -121,6 +123,8 @@ public class PassingParametersFactory {
             System.out.println("3)调用方法：创建新用户");
             Cre_User.createUser();
         }
+
+        return returnVal;
     }
     /*
      * 当list参数为多行时，用于提取多行有效的参数。
