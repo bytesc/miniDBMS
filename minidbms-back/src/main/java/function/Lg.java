@@ -7,7 +7,6 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lg {
-    public Object main(String statement) throws IOException, DocumentException {
-            Object returnVal = null;
+    public Object work(String statement) throws IOException, DocumentException {
+        Object returnVal = null;
 
 //        System.out.println("欢迎进入My-Simple-Dbms,请先登录");
 //        //声明一个变量a，记录用户输入错误次数，超过3此则退出系统
