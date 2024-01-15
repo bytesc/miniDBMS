@@ -22,16 +22,16 @@ FROM nginx:stable-alpine
 # 将构建的文件从构建阶段复制到 Nginx 镜像
 COPY --from=0 /app/dist /usr/share/nginx/html
 
-# 将 Nginx 配置文件复制到 Nginx 镜像
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+# # 将 Nginx 配置文件复制到 Nginx 镜像
+# COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
-# 暴露端口 8009
-EXPOSE 8009
+# 暴露端口 
+EXPOSE 8086
 
 # 启动 Nginx
 CMD ["nginx", "-g", "daemon off;"]
 
 # docker network create my-network
 # docker build -t vue-nginx .
-# docker run -d --name=vue-nginx --network=my-network -p 8009:8009 vue-nginx
+# docker run -d --name=vue-nginx --network=my-network -p 8086:8086 vue-nginx
 

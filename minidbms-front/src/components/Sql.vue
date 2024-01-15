@@ -1,16 +1,6 @@
 <script lang="ts" setup>
 import { ref,reactive } from 'vue'
 
-
-import {requestPack} from "../utils/requests.js";
-const getTableData = async ()=>{
-
-  // let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
-  let res= await requestPack.get(``)
-  // console.log(res)
-}
-getTableData()
-
 defineProps({
   msg: String,
 })
@@ -26,13 +16,14 @@ const SqlStatement = reactive({
 const onSubmit = () => {
   console.log('submit!')
   console.log(SqlStatement.content)
+  getTableData()
 }
 
 
-const jsonData = [
-  { name: 'Alice', age: 30, country: 'USA' ,gen:"xx"},
-  { name: 'Bob', age: 25, country: 'Canada' },
-  { name: 'Bob', age: 25, country: 'Canada' ,gen:"xx"},
+let jsonData = [
+  // { name: 'Alice', age: 30, country: 'USA' ,gen:"xx"},
+  // { name: 'Bob', age: 25, country: 'Canada' },
+  // { name: 'Bob', age: 25, country: 'Canada' ,gen:"xx"},
 ];
 
 // 从 JSON 数据中提取列
@@ -42,7 +33,17 @@ if (jsonData.length > 0) {
 }
 
 // 表格数据
-const tableData = ref(jsonData);
+let tableData = ref(jsonData);
+
+import {requestPack} from "../utils/requests.js";
+const getTableData = async ()=>{
+  // let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
+  let res= await requestPack.get(`/mydbms/index?statement=${SqlStatement.content}`)
+  console.log(res)
+  tableData.value = res.msg
+}
+// getTableData()
+
 
 </script>
 
