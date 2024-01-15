@@ -16,7 +16,6 @@ public class Controller {
 
     @RequestMapping("/index")
     public ResponseVO index(String statement) throws DocumentException, IOException {
-        statement += "quit;";
         return new ResponseVO(statement, Lg.main(statement));
     }
 }
