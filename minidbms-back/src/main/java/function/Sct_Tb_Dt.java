@@ -81,40 +81,13 @@ public class Sct_Tb_Dt {
         if (columns == null) {
             //条件为空，则查询语句为select * from 表名
             if (condition == null) {
-//                selectFromTb(dbName, tbName);
             }
-            //条件不为空，则查询语句为select * from 表名 where 列名称=列值
-//            else {
-//                String[] key_value = condition.get(1).split("=");
-//                String key = key_value[0];
-//                //如果表没有建立主键索引或者不是通过主键查询，调用未创建索引的方法
-//                if (!Is_Lg.hasIndex(dbName, tbName) || !Is_Lg.isIndex(config_file, key)) {
             selectAllFromTb(dbName, tbName, condition);
-//                } else {
-//                    System.out.println("带索引的查询");
-//                    selectWithIndex(dbName, tbName, condition);
-//                }
-//            }
         }
-        //列名称不为空，则查询语句为select 列名称1，列名称2 from 表名 where 列名称=列值/select 列名称1，列名称2 from 表名
-//        else {
-//            //条件为空，则查询语句为select 列名称1，列名称2 from 表名
-//            if (condition.size() == 0) {
-//                selectFromTb(dbName, tbName, columns);
-//            }
-//            //条件不为空，则查询语句为select 列名称1，列名称2 from 表名 where 列名称=列值
-//            else {
-//                String[] key_value = condition.get(1).split("=");
-//                String key = key_value[0];
-//                //如果表没有建立主键索引或者不是通过主键查询，调用未创建索引的方法
-//                if (!Is_Lg.hasIndex(dbName, tbName) || !Is_Lg.isIndex(config_file, key)) {
-//                    selectFromTb(dbName, tbName, columns, condition);
-//                } else {
-//                    System.out.println("带索引的查询");
-//                    selectWithIndex(dbName, tbName, columns, condition);
-//                }
-//            }
-//        }
+        else {
+            selectFromTb(dbName, tbName, columns, condition);
+        }
+
 
     }
 
@@ -330,7 +303,7 @@ public class Sct_Tb_Dt {
     }
 
     //select 列名称1，列名称2 from 表名 where 列名称=列值
-    public static void selectFromTb(String dbName, String tbName, List<String> tmp1, List<String> tmp2) throws DocumentException {
+    public static void selectFromTb(String dbName, String tbName, List<String> tmp2, List<String> tmp1) throws DocumentException {
         //若表存在，则得到表的最后一个文件下标
         String file_num = Is_Lg.lastFileName(dbName, tbName);
         //存where条件的condition数组
@@ -385,6 +358,103 @@ public class Sct_Tb_Dt {
         if (condition_find && !element_find) {
             System.out.println("未找到列");
         }
+    }
+
+    public static void selectFromTb(String dbName, List<String> tbName, List<String> tmp2, List<String> tmp1) throws DocumentException {
+        // 获取连接语句中的表名和连接条件
+        String[] joinConditions = tmp1.get(0).split("=");
+
+        // 存储每个表的最后一个文件下标
+        Map<String, String> tableFileNums = new HashMap<String, String>();
+        for (String tableName : tbName) {
+            String fileNum = Is_Lg.lastFileName(dbName, tableName);
+            tableFileNums.put(tableName, fileNum);
+        }
+
+
+        // 标记是否找到记录
+        boolean conditionFind = false;
+
+        for (int j = Integer.parseInt(tableFileNums.get(tbName.get(0))); j >= 0; j--) {
+            String num = String.valueOf(j);
+            File file = new File("./minidata/" + dbName + "/" + tbName.get(0) + "/" + tbName.get(0) + num + ".xml");
+
+            // 解析表1的XML
+            SAXReader reader = new SAXReader();
+            Document document = reader.read(file);
+            Element rootElement = document.getRootElement();
+
+            List<Node> nodes = rootElement.selectNodes(tbName.get(0));
+
+            for (Node node : nodes) {
+                Element node1 = (Element) node;
+                List<Attribute> list = node1.attributes();
+
+                // 获取连接字段的值
+                String joinValue = null;
+                for (Attribute attribute : list) {
+                    joinValue = attribute.getText();
+                    break;
+
+                }
+                //System.out.println(joinValue);
+                if (joinValue != null) {
+                    // 在表2中查找匹配的记录
+                    boolean matchFound = false;
+                    for (int k = Integer.parseInt(tableFileNums.get(tbName.get(1))); k >= 0; k--) {
+                        String num2 = String.valueOf(k);
+                        File file2 = new File("./minidata/" + dbName + "/" + tbName.get(1) + "/" + tbName.get(1) + num2 + ".xml");
+
+                        // 解析表2的XML
+                        SAXReader reader2 = new SAXReader();
+                        Document document2 = reader2.read(file2);
+                        Element rootElement2 = document2.getRootElement();
+
+                        List<Node> nodes2 = rootElement2.selectNodes(tbName.get(1));
+
+                        for (Node node2 : nodes2) {
+                            Element node3 = (Element) node2;
+                            List<Attribute> list2 = node3.attributes();
+
+                            // 检查连接字段的值是否匹配
+                            for (Attribute attribute2 : list2) {
+                                if (attribute2.getText().equals(joinValue)) {
+                                    conditionFind = true;
+                                    //System.out.print(attribute2.getName() + "=" + attribute2.getText() + " ");
+
+                                    for (Iterator i = list.iterator(); i.hasNext(); ) {
+                                        Attribute attribute = (Attribute) i.next();
+                                        if (!tmp2.contains(attribute.getName())) {
+                                            continue;
+                                        }
+                                        System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
+                                    }
+
+                                    for (Iterator i = list2.iterator(); i.hasNext(); ) {
+                                        Attribute attribute = (Attribute) i.next();
+                                        if (!tmp2.contains(attribute.getName())) {
+                                            continue;
+                                        }
+                                        if (attribute.getText().equals(joinValue)) {
+                                            continue;
+                                        }
+                                        System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
+                                    }
+                                    System.out.println();
+                                }
+
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!conditionFind) {
+            System.out.println("未找到匹配的记录");
+        }
+
     }
 
     //建立索引后的查询select 列名称1，列名称2 from 表名 where 列名称=列值

@@ -89,8 +89,14 @@ public class PassingParametersFactory {
             List<String> columns=list.get(0);
             List<String> condition = list.get(2);
             String tableName = list.get(1).get(1);
+            String tableName2 = list.get(1).size() > 2 ? list.get(1).get(2) : null;
+            if (tableName2!=null) {
+                List<String> tableNames = Arrays.asList(tableName, tableName2);
+                Sct_Tb_Dt.select2(Use_Db.dbName, tableNames, columns, condition);
+            } else {
+                Sct_Tb_Dt.select(Use_Db.dbName, tableName, columns, condition);
+            }
 
-            Sct_Tb_Dt.select(Use_Db.dbName, tableName, columns, condition);
         }
         else if (sql_key.equals("update")) {
             System.out.println("3)调用方法：更新指定记录");

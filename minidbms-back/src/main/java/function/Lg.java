@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class Lg {
     public static Object main(String statement) throws IOException, DocumentException {
-            Object returnVal = null;
+         Object returnVal = null;
 
 //        System.out.println("欢迎进入My-Simple-Dbms,请先登录");
 //        //声明一个变量a，记录用户输入错误次数，超过3此则退出系统
