@@ -39,6 +39,7 @@ service.interceptors.response.use(res=>{
         //     console.log(res.data)
         //     return data
         // }
+        ElMessage.success("数据库响应成功")
         return res.data
     },
     error => {

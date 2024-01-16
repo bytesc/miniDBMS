@@ -96,7 +96,7 @@ const getTableData = async ()=>{
           </el-form-item>
         </el-form>
 
-        <el-table stripe :data="tableData">
+        <el-table stripe :data="tableData" max-height="500">
           <el-table-column
               v-for="key in columns"
               :prop="key"
@@ -113,7 +113,7 @@ const getTableData = async ()=>{
         <el-row :gutter="20">
           <el-col :span="8" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
           <el-col :span="8" class="foot-item"><div class="grid-content ep-bg-purple" >
-            <p style="text-align: center; color: #888888"><strong>庄家宝 任辰宇 史海云 谈伽辉 林金锐</strong></p>
+            <p style="text-align: center; color: #888888"><strong>庄家宝 史海云 任辰宇 谈伽辉 林金锐</strong></p>
           </div></el-col>
           <el-col :span="4" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
           <el-col :span="4" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
@@ -121,7 +121,7 @@ const getTableData = async ()=>{
         <el-row :gutter="20" >
           <el-col :span="4" class="foot-bottom"><div class="grid-content ep-bg-purple" ></div></el-col>
           <el-col :span="16" class="foot-bottom"><div class="grid-content ep-bg-purple" >
-            <p style="text-align: center; color: #888888"><strong>© 2023 Copyright: bytesc</strong></p>
+            <p style="text-align: center; color: #888888"><strong>© 2024 Copyright: bytesc</strong></p>
           </div></el-col>
           <el-col :span="4" class="foot-bottom"><div class="grid-content ep-bg-purple" ></div></el-col>
         </el-row>
