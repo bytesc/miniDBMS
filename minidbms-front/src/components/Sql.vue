@@ -35,6 +35,12 @@ const onSubmit = () => {
   getTableData()
 }
 
+const onHelp = () => {
+  SqlStatement.content="help"
+  getTableData()
+  SqlStatement.content=""
+}
+
 
 import {requestPack} from "../utils/requests.js";
 const getTableData = async ()=>{
@@ -91,6 +97,8 @@ const getTableData = async ()=>{
             <el-input v-model="SqlStatement.content" type="textarea" :rows="6"/>
           </el-form-item>
           <el-form-item>
+            <el-button type="success" @click="onHelp">帮助</el-button>
+            <div style="flex-grow: 1;"/>
             <el-button type="primary" @click="onSubmit">提交</el-button>
             <el-button @click="onClear">清空</el-button>
           </el-form-item>
