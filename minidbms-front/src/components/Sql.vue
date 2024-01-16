@@ -46,7 +46,7 @@ const onLook = () => {
   getTableData()
 }
 
-const DatabaseName = ref("数据库名")
+const DatabaseName = ref("")
 const handleDbRowOp = (dbName) =>{
   // console.log(dbName)
   DatabaseName.value = dbName
@@ -54,10 +54,18 @@ const handleDbRowOp = (dbName) =>{
   getTableData()
 }
 
+const tableName = ref("")
 const handleTableRowOp = (tbName)=>{
+  tableName.value = tbName
   SqlStatement.content=`select * from ${tbName};`
   getTableData()
 }
+
+
+
+// const handleTableRowAdd = (row)=>{
+//
+// }
 
 import {requestPack} from "../utils/requests.js";
 const getTableData = async ()=>{
@@ -95,26 +103,35 @@ SqlStatement.content=""
         <el-menu-item index="1"><h1><strong>MiniDBMS</strong></h1></el-menu-item>
         <div class="flex-grow" />
 <!--        <el-menu-item index="1">Processing Center</el-menu-item>-->
-        <el-sub-menu index="2">
-          <template #title>{{ DatabaseName }}</template>
-          <el-menu-item index="2-1">item one</el-menu-item>
-          <el-menu-item index="2-2">item two</el-menu-item>
-          <el-menu-item index="2-3">item three</el-menu-item>
-          <el-sub-menu index="2-4">
-            <template #title>item four</template>
-            <el-menu-item index="2-4-1">item one</el-menu-item>
-            <el-menu-item index="2-4-2">item two</el-menu-item>
-            <el-menu-item index="2-4-3">item three</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu>
+<!--        <el-sub-menu index="2" v-if="DatabaseName!==''">-->
+<!--          <template #title>{{ DatabaseName }}</template>-->
+<!--          <el-menu-item index="2-1" @click="handleTableRowOp(tableName)"-->
+<!--          v-if="tableName!==''">-->
+<!--            {{ tableName }}</el-menu-item>-->
+<!--          <el-menu-item index="2-2">item two</el-menu-item>-->
+<!--          <el-menu-item index="2-3">item three</el-menu-item>-->
+<!--          <el-sub-menu index="2-4">-->
+<!--            <template #title>item four</template>-->
+<!--            <el-menu-item index="2-4-1">item one</el-menu-item>-->
+<!--            <el-menu-item index="2-4-2">item two</el-menu-item>-->
+<!--            <el-menu-item index="2-4-3">item three</el-menu-item>-->
+<!--          </el-sub-menu>-->
+<!--        </el-sub-menu>-->
       </el-menu>
     </el-header>
 
     <el-container>
-      <el-main style="padding: 50px; margin-left: 20px;margin-right: 20px" >
+      <el-main style="padding: 20px; margin-left: 20px;margin-right: 20px" >
         <el-row :gutter="20">
           <el-col :xs="24" :sm="24" :md="14" :lg="16" :xl="16"
           >
+            <el-button type="success" @click="onLook">查看数据库</el-button>
+            <el-button @click="handleDbRowOp(DatabaseName)"
+                v-if="DatabaseName!==''">
+              {{ DatabaseName }}</el-button>
+              <el-button  @click="handleTableRowOp(tableName)"
+                            v-if="tableName!==''">
+                {{ tableName }}</el-button>
             <el-table stripe :data="tableData" max-height="500">
               <el-table-column
                   v-for="key in columns"
@@ -134,12 +151,26 @@ SqlStatement.content=""
               </el-table-column>
 
               <el-table-column fixed="right" label="" width="60"
-                               v-if="SqlStatement.content.match('show tables;')">
+                               v-if="SqlStatement.content.match('show tables;') && DatabaseName!==''">
                 <template #default="scope">
                   <el-button link type="primary" size="small"
                              @click="handleTableRowOp(scope.row.tableName)"
                   >查看</el-button
                   >
+                </template>
+              </el-table-column>
+
+              <el-table-column fixed="right" label="" width="60"
+                               v-if="SqlStatement.content.match('select') && tableName!==''">
+                <template #default="scope">
+                  <el-button link type="danger" size="small"
+                             @click="handleTableRowDel(scope.row)"
+                  >删除</el-button
+                  >
+<!--                  <el-button link type="primary" size="small"-->
+<!--                             @click="handleTableRowAdd(scope.row)"-->
+<!--                  >添加</el-button-->
+<!--                  >-->
                 </template>
               </el-table-column>
             </el-table>
@@ -156,7 +187,6 @@ SqlStatement.content=""
               <el-form-item>
                 <el-button type="success" @click="onHelp">帮助</el-button>
                 <div style="flex-grow: 1;"/>
-                <el-button type="success" @click="onLook">查看数据库</el-button>
                 <el-button type="primary" @click="onSubmit">提交</el-button>
                 <el-button @click="onClear">清空</el-button>
               </el-form-item>
