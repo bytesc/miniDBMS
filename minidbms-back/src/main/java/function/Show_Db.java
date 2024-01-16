@@ -21,12 +21,11 @@ public class Show_Db {
             // 忽略带有.后缀的文件夹
             String databaseName = files[i].getName();
             String[] splits = databaseName.split("/");
-            if (splits[splits.length - 1].contains(".")) {
+            if (!splits[splits.length - 1].contains(".")) {
                 map.put("column", i + "");
-                map.put("tableName", databaseName);
+                map.put("databaseName", databaseName);
+                list.add(map);
             }
-
-            list.add(map);
         }
         return list;
     }
