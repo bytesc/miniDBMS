@@ -119,7 +119,7 @@ public class PassingParametersFactory {
             System.out.println("3)调用方法：更新指定记录");
 
             List<List<String>> tmp = getPararmeterList(list);
-            Up_Tb_Dt.updateTable(Use_Db.dbName, list.get(0).get(1), tmp);
+            returnVal = Up_Tb_Dt.updateTable(Use_Db.dbName, list.get(0).get(1), tmp);
         }
         else if (sql_key.equals("drop database")) {
             System.out.println("3)调用方法：删除数据库");
@@ -128,6 +128,10 @@ public class PassingParametersFactory {
         else if (sql_key.equals("drop table")) {
             System.out.println("3)调用方法：删除表");
             returnVal = Del_Tb.deleteTable(Use_Db.dbName, ls.get(1));
+        }
+        else if (sql_key.equals("rename table")) {
+            System.out.println("3)调用方法：修改表名");
+            returnVal = Rne_Tb.renametable(ls.get(1),list.get(1).get(1),Use_Db.dbName);
         }
         else if (sql_key.equals("delete from")) {
             System.out.println("3)调用方法：删除指定记录");
@@ -138,7 +142,7 @@ public class PassingParametersFactory {
                 String r = tmp1.get(i);
                 tmp2.add(r);
             }
-            Del_Tb_Dt.deleteFromTable(Use_Db.dbName, ls.get(1), tmp2);
+            returnVal = Del_Tb_Dt.deleteFromTable(Use_Db.dbName, ls.get(1), tmp2);
         }
 //        else if (sql_key.equals("create index on")) {
 //            System.out.println("3)调用方法：创建索引");
