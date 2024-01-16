@@ -27,6 +27,11 @@ public class Controller {
         return responseVO;
     }
 
+    @RequestMapping("/dbname")
+    public ResponseVO getDbname() {
+        return new ResponseVO("返回数据库名", login.lookDbname());
+    }
+
     @Bean
     public Lg getLogin() {
         return new Lg();

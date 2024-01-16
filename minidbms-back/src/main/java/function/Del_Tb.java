@@ -1,13 +1,22 @@
 package function;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Del_Tb {
     //delete table 表名
-    public static void deleteTable(String dbName, String tbName) {
+    public static List<Map<String, String>> deleteTable(String dbName, String tbName) {
+        List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
+        HashMap<String, String> map = new HashMap<String, String>();
+        returnList.add(map);
+
         //判断数据库是否为空
         if (Is_Lg.isDatabaseEmpty()) {
-            return;
+            map.put("result", "数据库为空");
+            return returnList;
         }
         //表存在则返回一个对象
         File file = Is_Lg.hasDir(dbName, tbName);
@@ -18,7 +27,8 @@ public class Del_Tb {
             files[i].delete();
         }
         file.delete();
-        System.out.println(tbName+ "表删除成功");
 
+        map.put("result", "表删除成功");
+        return returnList;
     }
 }
