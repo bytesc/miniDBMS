@@ -1,20 +1,25 @@
 package function;
 
 import bpulstree.BPlusTree;
+import bpulstree.Main;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Del_Tb_Dt {
     //delete from 表名 where 列名称=列值
-    public static void deleteFromTable(String dbName,String tbName,List<String> tmp) throws DocumentException, IOException {
+    public static List<Map<String, String>> deleteFromTable(String dbName, String tbName, List<String> tmp) throws DocumentException, IOException {
+        List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
+        HashMap<String, String> map = new HashMap<String, String>();
+        returnList.add(map);
+
         //数据库是否为空
         if (Is_Lg.isDatabaseEmpty()) {
-            return;
+            map.put("result", "数据库为空");
+            return returnList;
         }
         //输出tmp列表
         for (int i = 0; i < tmp.size(); i++) {
@@ -37,10 +42,13 @@ public class Del_Tb_Dt {
                 File file = new File("./minidata/" + dbName + "/" + tbName + "/" + tbName + last_num + ".xml");
                 find=delete(file,dbName,tbName,key_value,last_num);
                 if(find){
-                    return;
+                    map.put("result", "删除完成");
+                    return returnList;
                 }
             }
             System.out.println("没有找到要删除的记录");
+            map.put("result", "没有找到要删除的记录");
+            return returnList;
         }
         //主键查询删除
         else {
@@ -52,9 +60,12 @@ public class Del_Tb_Dt {
             //删除数据后更新索引
             if(find) {
                 Cre_Id.updateIndex_delete(tbName, key_value[1]);
-                return;
+                map.put("result", "删除完成");
+                return returnList;
             }
             System.out.println("没有找到要删除的记录");
+            map.put("result", "没有找到要删除的记录");
+            return returnList;
         }
     }
     //主键删除用delete方法

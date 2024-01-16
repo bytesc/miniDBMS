@@ -142,7 +142,7 @@ public class PassingParametersFactory {
                 String r = tmp1.get(i);
                 tmp2.add(r);
             }
-            Del_Tb_Dt.deleteFromTable(Use_Db.dbName, ls.get(1), tmp2);
+            returnVal = Del_Tb_Dt.deleteFromTable(Use_Db.dbName, ls.get(1), tmp2);
         }
 //        else if (sql_key.equals("create index on")) {
 //            System.out.println("3)调用方法：创建索引");
