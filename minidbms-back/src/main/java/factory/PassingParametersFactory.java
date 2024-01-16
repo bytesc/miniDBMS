@@ -61,7 +61,7 @@ public class PassingParametersFactory {
         }
         else if (sql_key.equals("create database")) {
             System.out.println("3)调用方法：创建数据库");
-            Cre_Db.createDB(ls.get(1));
+            returnVal=Cre_Db.createDB(ls.get(1));
         }
         else if (sql_key.equals("insert into")) {
             System.out.println("3)调用方法：插入数据到表");
