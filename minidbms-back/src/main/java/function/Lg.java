@@ -11,7 +11,9 @@ import org.dom4j.io.SAXReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Lg {
     public Object work(String statement) throws IOException, DocumentException {
@@ -61,7 +63,7 @@ public class Lg {
 //            //处理分行输入的问题，就是读;号才停止;
         //sql parse
         if (sql.equals("help")) {
-            read_help();
+            returnVal=read_help();
             return returnVal;
         }
 
@@ -126,15 +128,20 @@ public class Lg {
         return returnVal;
     }
 
-    public static void read_help() throws DocumentException {//读取帮助文件
+    public static List<Map<String, String>> read_help() throws DocumentException {//读取帮助文件
         File file = new File("./help.xml");
+        List<Map<String, String>> list = new ArrayList<Map<String, String>>();
         SAXReader saxReader = new SAXReader();
         Document document = saxReader.read(file);
         List<Node> nodes = document.getRootElement().selectNodes("help");
         for (Node node : nodes) {
             Element element = (Element) node;
             System.out.println(element.getText());
+                        Map<String, String> map = new HashMap<String, String>();
+            map.put("result", element.getText());
+            list.add(map);
         }
+        return list;
     }
 
     public Lg() {
