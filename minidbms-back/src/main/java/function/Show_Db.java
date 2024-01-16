@@ -17,8 +17,14 @@ public class Show_Db {
         for(int i=0;i<files.length;i++){
 
             Map<String, String> map = new HashMap<String, String>();
-            map.put("column", i + "");
-            map.put("tableName", files[i].getName());
+
+            // 忽略带有.后缀的文件夹
+            String databaseName = files[i].getName();
+            String[] splits = databaseName.split("/");
+            if (splits[splits.length - 1].contains(".")) {
+                map.put("column", i + "");
+                map.put("tableName", databaseName);
+            }
 
             list.add(map);
         }
