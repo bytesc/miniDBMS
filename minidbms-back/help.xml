@@ -11,7 +11,13 @@
     <help>从数据库中查找表：select 表名 from 数据库名</help>
     <help></help>
     <help>创建表：create table 表名 (列名称1 数据类型，列名称2 数据类型,......)</help>
+
+    <help>增加表字段：alter table 表名 add 列名称=类型</help>
+    <help>删除表字段：alter table 表名 drop 列名称</help>
+    <help>修改表字段：alter table 表名 modify 旧列名称=新列名称</help>
+
     <help>修改表名：rename table 新表名=旧表名</help>
+
     <help>删除表：drop table 表名</help>
     <help>向表中插入数据：insert into 表名(列名称1，列名称2，...) values(列值1，列值2，...)</help>
     <help>从表中删除数据：delete from 表名 where 列名称=列值</help>

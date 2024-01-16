@@ -144,6 +144,28 @@ public class PassingParametersFactory {
             }
             returnVal = Del_Tb_Dt.deleteFromTable(Use_Db.dbName, ls.get(1), tmp2);
         }
+        else if(sql_key.equals("alter table"))//[[alter table, book], [add, price, string]]
+        {   String cond = list.get(1).get(0);
+            if(cond.equals("add"))
+            {
+                System.out.println("3)调用方法：增加表字段");//[[alter table, tablename], [add, conlums=type]]
+                returnVal=Add_Tb.add(Use_Db.dbName,list.get(0).get(1),list.get(1));
+
+            }
+            if(cond.equals("drop"))////[[alter table, tablename], [drop, conlums]]
+            {
+                System.out.println("3)调用方法：删除表字段");
+                returnVal=Drp_Tb.delete(Use_Db.dbName,list.get(0).get(1),list.get(1));
+
+            }
+            if(cond.equals("modify"))//[[alter table, book], [modify, price=price1]]
+            {
+                System.out.println("3)调用方法：修改表字段");
+                returnVal=Mod_Tb.modify(Use_Db.dbName,list.get(0).get(1),list.get(1));
+
+            }
+
+        }
 //        else if (sql_key.equals("create index on")) {
 //            System.out.println("3)调用方法：创建索引");
 //            Cre_Id.createIndex(Use_Db.dbName, list.get(0).get(1), list.get(1).get(1));

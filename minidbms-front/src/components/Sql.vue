@@ -41,6 +41,23 @@ const onHelp = () => {
   SqlStatement.content=""
 }
 
+const onLook = () => {
+  SqlStatement.content="show databases;"
+  getTableData()
+}
+
+const DatabaseName = ref("数据库名")
+const handleDbRowOp = (dbName) =>{
+  // console.log(dbName)
+  DatabaseName.value = dbName
+  SqlStatement.content=`use ${dbName};\nshow tables;`
+  getTableData()
+}
+
+const handleTableRowOp = (tbName)=>{
+  SqlStatement.content=`select * from ${tbName};`
+  getTableData()
+}
 
 import {requestPack} from "../utils/requests.js";
 const getTableData = async ()=>{
@@ -55,7 +72,9 @@ const getTableData = async ()=>{
 }
 // getTableData()
 
-
+SqlStatement.content="help"
+getTableData()
+SqlStatement.content=""
 
 </script>
 
@@ -77,7 +96,7 @@ const getTableData = async ()=>{
         <div class="flex-grow" />
 <!--        <el-menu-item index="1">Processing Center</el-menu-item>-->
         <el-sub-menu index="2">
-          <template #title>Workspace</template>
+          <template #title>{{ DatabaseName }}</template>
           <el-menu-item index="2-1">item one</el-menu-item>
           <el-menu-item index="2-2">item two</el-menu-item>
           <el-menu-item index="2-3">item three</el-menu-item>
@@ -103,6 +122,26 @@ const getTableData = async ()=>{
                   :label="key"
                   sortable
               ></el-table-column>
+
+              <el-table-column fixed="right" label="" width="60"
+              v-if="SqlStatement.content==='show databases;'">
+                <template #default="scope">
+                  <el-button link type="primary" size="small"
+                             @click="handleDbRowOp(scope.row.DatabaseName)"
+                  >选择</el-button
+                  >
+                </template>
+              </el-table-column>
+
+              <el-table-column fixed="right" label="" width="60"
+                               v-if="SqlStatement.content.match('show tables;')">
+                <template #default="scope">
+                  <el-button link type="primary" size="small"
+                             @click="handleTableRowOp(scope.row.tableName)"
+                  >查看</el-button
+                  >
+                </template>
+              </el-table-column>
             </el-table>
 
           </el-col>
@@ -117,6 +156,7 @@ const getTableData = async ()=>{
               <el-form-item>
                 <el-button type="success" @click="onHelp">帮助</el-button>
                 <div style="flex-grow: 1;"/>
+                <el-button type="success" @click="onLook">查看数据库</el-button>
                 <el-button type="primary" @click="onSubmit">提交</el-button>
                 <el-button @click="onClear">清空</el-button>
               </el-form-item>

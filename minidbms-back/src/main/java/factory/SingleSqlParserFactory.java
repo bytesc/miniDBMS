@@ -109,6 +109,23 @@ public class SingleSqlParserFactory {
 			System.out.println("2)匹配正则表达式：create user");
 			tmp=new CreateUserSqlParser(sql);
 		}
+		else if(contains(sql,"(alter table)(.+)(add)")){
+			System.out.println("2)匹配正则表达式：add");
+			tmp=new AddTableSqlParser(sql);
+
+		}
+		//[[alter table, tablename], [drop, conlums]]
+		else if(contains(sql,"(alter table)(.+)(drop)")){
+			System.out.println("2)匹配正则表达式：delete table");
+			tmp=new DeleteTableParser(sql);
+
+		}//
+		else if(contains(sql,"(alter table)(.+)(modify)")){
+			System.out.println("2)匹配正则表达式：modify table");
+			tmp=new ModifyTableSqlParser(sql);
+
+		}
+
 		else if(contains(sql,"(rename table)")){
 			System.out.println("2)匹配正则表达式：rename table");
 			tmp=new RenameTableSqlParser(sql);
