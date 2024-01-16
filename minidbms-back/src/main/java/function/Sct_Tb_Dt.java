@@ -28,7 +28,7 @@ public class Sct_Tb_Dt {
             return returnList;
         }
 
-        //列名称为空，则查询语句为select * from 表名/select * from 表名 where 列名称=列值
+    //列名称为空，则查询语句为select * from 表名/select * from 表名 where 列名称=列值
         if (columns == null) {
             //条件为空，则查询语句为select * from 表名
             if (condition == null) {
@@ -51,7 +51,7 @@ public class Sct_Tb_Dt {
         else {
             //条件为空，则查询语句为select 列名称1，列名称2 from 表名
             if (condition.size() == 0) {
-                selectFromTb(dbName, tbName, columns);
+                returnList = selectFromTb(dbName, tbName, columns);
             }
             //条件不为空，则查询语句为select 列名称1，列名称2 from 表名 where 列名称=列值
             else {
@@ -59,7 +59,7 @@ public class Sct_Tb_Dt {
                 String key = key_value[0];
                 //如果表没有建立主键索引或者不是通过主键查询，调用未创建索引的方法
                 if (!Is_Lg.hasIndex(dbName, tbName) || !Is_Lg.isIndex(config_file, key)) {
-                    selectFromTb(dbName, tbName, columns, condition);
+                    returnList = selectFromTb(dbName, tbName, columns, condition);
                 } else {
                     System.out.println("带索引的查询");
                     selectWithIndex(dbName, tbName, columns, condition);
@@ -293,7 +293,9 @@ public class Sct_Tb_Dt {
     }
 
     //select 列名称1，列名称2 from 表名
-    public static void selectFromTb(String dbName, String tbName, List<String> tmp1) throws DocumentException {
+    public static List<Map<String, String>> selectFromTb(String dbName, String tbName, List<String> tmp1) throws DocumentException {
+        List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
+
         //若表存在，则得到表的最后一个文件下标
         String file_num = Is_Lg.lastFileName(dbName, tbName);
         //标记是否找到列
@@ -311,6 +313,8 @@ public class Sct_Tb_Dt {
             List<Node> nodes = rootElement.selectNodes(tbName);
 
             for (Node node : nodes) {
+                HashMap<String, String> map = new HashMap<String, String>();
+
                 Element node1 = (Element) node;
                 List<Attribute> list = node1.attributes();
                 for (Iterator i = list.iterator(); i.hasNext(); ) {
@@ -319,22 +323,31 @@ public class Sct_Tb_Dt {
                         if (attribute.getName().equals(tmp1.get(k))) {
                             columns_find = true;
                             System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
+                            map.put(attribute.getName(), attribute.getText());
                             break;
                         }
                     }
                 }
                 System.out.println();
+                returnList.add(map);
             }
 
         }
         if (!columns_find) {
             System.out.println("未找到列");
-            return;
+
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("result", "未找到列");
+            returnList.add(map);
         }
+
+        return returnList;
     }
 
     //select 列名称1，列名称2 from 表名 where 列名称=列值
-    public static void selectFromTb(String dbName, String tbName, List<String> tmp2, List<String> tmp1) throws DocumentException {
+    public static List<Map<String, String>> selectFromTb(String dbName, String tbName, List<String> tmp1, List<String> tmp2) throws DocumentException {
+        List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
+
         //若表存在，则得到表的最后一个文件下标
         String file_num = Is_Lg.lastFileName(dbName, tbName);
         //存where条件的condition数组
@@ -355,6 +368,8 @@ public class Sct_Tb_Dt {
             List<Node> nodes = rootElement.selectNodes(tbName);
 
             for (Node node : nodes) {
+                HashMap<String, String> map = new HashMap<String, String>();
+
                 find1 = false;
                 Element node1 = (Element) node;
                 List<Attribute> list = node1.attributes();
@@ -373,22 +388,29 @@ public class Sct_Tb_Dt {
                             if (attribute.getName().equals(tmp1.get(k))) {
                                 element_find = true;
                                 System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
+
+                                map.put(attribute.getName(), attribute.getText());
                                 break;
                             }
                         }
                     }
                     System.out.println();
+                    returnList.add(map);
                 }
             }
         }
         if (!condition_find) {
-            System.out.println("未找到记录");
-            return;
-
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("result",  "未找到条件");
+            returnList.add(map);
         }
         if (condition_find && !element_find) {
-            System.out.println("未找到列");
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("result",  "未找到列");
+            returnList.add(map);
         }
+
+        return returnList;
     }
 
     public static List<Map<String, String>> selectFromTb(String dbName, List<String> tbName, List<String> tmp2, List<String> tmp1) throws DocumentException {

@@ -126,6 +126,10 @@ public class SingleSqlParserFactory {
 
 		}
 
+		else if(contains(sql,"(rename table)")){
+			System.out.println("2)匹配正则表达式：rename table");
+			tmp=new RenameTableSqlParser(sql);
+		}
 		else
 		{
 			System.out.println("SQL语句有误，请重新输入");
