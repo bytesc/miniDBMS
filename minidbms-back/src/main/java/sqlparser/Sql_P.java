@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * Sql语句片段
  * @since 2018-4-4
  */
-public class SqlSegment {
+public class Sql_P {
 	private static final String Crlf = "|";
 	@SuppressWarnings("unused")
 	private static final String FourSpace = "　　";
@@ -36,7 +36,7 @@ public class SqlSegment {
 	 　* @param bodySplitPattern 用于分割body的正则表达式
 	 　*/
 
-	public SqlSegment(String segmentRegExp,String bodySplitPattern)
+	public Sql_P(String segmentRegExp, String bodySplitPattern)
 	{
 		start="";
 		body="";

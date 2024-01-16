@@ -8,7 +8,7 @@ import java.util.*;
 /*
  * 工厂类：对解析后的sql语句进行判断，调用相应功能的模块函数
  */
-public class PassingParametersFactory {
+public class Exe_Fun {
 
     public static Object dealParameters(List<List<String>> list) throws IOException, DocumentException {//将语句预处理后，生成的结果
         /**

@@ -6,9 +6,9 @@ import com.sun.org.glassfish.gmbal.Description;
  * 单句更新语句sql解析
  */
  @Description("更新语句解析")
-public class UpdateSqlParser extends BaseSingleSqlParser{
+public class Up_P extends Base_P {
 
-	public UpdateSqlParser(String originalSql) {
+	public Up_P(String originalSql) {
 		super(originalSql);
 
 	}
@@ -20,9 +20,9 @@ public class UpdateSqlParser extends BaseSingleSqlParser{
 	protected void initializeSegments()
 	{
 		//System.out.println("调用了UpdateSqlParser的initializeSegments方法");
-		segments.add(new SqlSegment("(update)(.+)(set)","[,]"));
-		segments.add(new SqlSegment("(set)(.+?)( where | ENDOFSQL)","[,]"));
-		segments.add(new SqlSegment("(where)(.+)(ENDOFSQL)","(and|or)"));
+		segments.add(new Sql_P("(update)(.+)(set)","[,]"));
+		segments.add(new Sql_P("(set)(.+?)( where | ENDOFSQL)","[,]"));
+		segments.add(new Sql_P("(where)(.+)(ENDOFSQL)","(and|or)"));
 	}
 
 }

@@ -86,14 +86,14 @@ public class Lg {
             } else {
                 //将预处理后的SQL语句匹配SQL正则表达式，返回含有SQL的body信息的List
                 try {
-                    parameter_list = SingleSqlParserFactory.generateParser(statement1);
+                    parameter_list = Split_Sql.generateParser(statement1);
                 } catch (Exception e) {
                     e.printStackTrace();//异常处理，不用管
 
                 }
                 //根据SQL的body部分，调用相应的功能模块
                 try {
-                    returnVal = PassingParametersFactory.dealParameters(parameter_list);
+                    returnVal = Exe_Fun.dealParameters(parameter_list);
                     
                 } catch (Exception e) {
                     e.printStackTrace();//异常处理，不用管
@@ -112,14 +112,14 @@ public class Lg {
 //        } else {
 //            //将预处理后的SQL语句匹配SQL正则表达式，返回含有SQL的body信息的List
 //            try {
-//                parameter_list = SingleSqlParserFactory.generateParser(sql);
+//                parameter_list = Split_Sql.generateParser(sql);
 //            } catch (Exception e) {
 //                e.printStackTrace();//异常处理，不用管
 //
 //            }
 //            //根据SQL的body部分，调用相应的功能模块
 //            try {
-//                returnVal = PassingParametersFactory.dealParameters(parameter_list);
+//                returnVal = Exe_Fun.dealParameters(parameter_list);
 //            } catch (Exception e) {
 //                e.printStackTrace();//异常处理，不用管
 //            }

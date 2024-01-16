@@ -4,8 +4,8 @@ package sqlparser;
  * 单句使用数据库语句解析器
  * 2018-4-14
  */
-public class RenameTableSqlParser extends BaseSingleSqlParser{
-    public RenameTableSqlParser (String originalSql) {
+public class Re_Tb_P extends Base_P {
+    public Re_Tb_P(String originalSql) {
         super(originalSql);
 
     }
@@ -15,8 +15,8 @@ public class RenameTableSqlParser extends BaseSingleSqlParser{
     protected void initializeSegments()
     {
         //System.out.println("调用了CreateTableSqlParser的initializeSegments方法");
-        segments.add(new SqlSegment("(rename table)(.+?)(=)","[,]"));
-        segments.add(new SqlSegment("(=)(.+?)(ENDOFSQL)","[,]"));
+        segments.add(new Sql_P("(rename table)(.+?)(=)","[,]"));
+        segments.add(new Sql_P("(=)(.+?)(ENDOFSQL)","[,]"));
 //rename table book=111;
     }
 }

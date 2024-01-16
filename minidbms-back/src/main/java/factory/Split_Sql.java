@@ -10,63 +10,63 @@ import sqlparser.*;
 /*
  * 工厂类:用于创建不同的BaseSingleSqlParser的实例，并对每句sql进行解析；
  */
-public class SingleSqlParserFactory {
+public class Split_Sql {
 	public static List<List<String>> generateParser(String sql)
 	{
-		BaseSingleSqlParser tmp = null;
+		Base_P tmp = null;
 
 		if(contains(sql,"(create database)([^\\n]+)")) {// 判断字符串sql是否包含"(create database)"以及之后的任意字符
 		System.out.println("2)匹配正则表达式：create database");
-		tmp = new CreateDatabaseSqlParser(sql);
+		tmp = new Cre_Db_P(sql);
 		}
 		else if(contains(sql,"(drop database)(.+)"))
 		{
 			System.out.println("2)匹配正则表达式：drop database");
-			tmp = new DropDatabaseSqlParser(sql);
+			tmp = new Drp_Db_P(sql);
 
 		}
 		else if(contains(sql,"(show databases)"))
 		{
 			System.out.println("2)匹配正则表达式：show databases");
-			tmp = new ShowDatabaseSqlParser(sql);
+			tmp = new Show_Db_P(sql);
 		}
 		else if(contains(sql,"(show tables)"))
 		{
 			System.out.println("2)匹配正则表达式：show tables");
-			tmp = new ShowTablesSqlParser(sql);
+			tmp = new Show_Tb_P(sql);
 		}
 		else if(contains(sql,"(use database)(.+)"))
 		{
 			System.out.println("2)匹配正则表达式：use database");
-			tmp = new UseDatabaseSqlParser(sql);
+			tmp = new Use_Db_P(sql);
 		}
 		else if(contains(sql,"(create table)(.+)"))
 		{
 			System.out.println("2)匹配正则表达式：create table");
-			tmp = new CreateTableSqlParser(sql);
+			tmp = new Cre_Tb_P(sql);
 
 		}
 		else if(contains(sql,"(insert into)(.+)(values)(.+)"))
 		{
 			System.out.println("2)匹配正则表达式：insert into");
-			tmp = new InsertSqlParser(sql);
+			tmp = new Ist_Sql_P(sql);
 
 		}
 		else if(contains(sql,"(insert into)(.+)(valuess)(.+)()"))
 		{
 			System.out.println("2)匹配正则表达式：insert into where");
-			tmp = new InsertSelectSqlParser(sql);
+			tmp = new Ist_Sct_Sql_P(sql);
 
 		}
 		else if(contains(sql,"(select \\* from)(.+)"))
 		{
 			if(contains(sql,"(select \\* from)(.+)(where)(.+)")){
 				System.out.println("2)匹配正则表达式：select * from where");
-				tmp=new SelectAllWhereSqlParser(sql);
+				tmp=new Sct_All_Where_P(sql);
 			}
 			else {
 				System.out.println("2)匹配正则表达式：select * from");
-				tmp = new SelectAllSqlParser(sql);
+				tmp = new Sct_All_P(sql);
 			}
 
 		}
@@ -74,61 +74,61 @@ public class SingleSqlParserFactory {
 		{
 
 			System.out.println("2)匹配正则表达式：select from");
-			tmp = new SelectSqlParser(sql);
+			tmp = new Sct_P(sql);
 
 		}
 
 		else if(contains(sql,"(delete from)(.+)"))
 		{
 			System.out.println("2)匹配正则表达式：delete from");
-			tmp = new DeleteSqlParser(sql);
+			tmp = new Del_Sql_P(sql);
 
 		}
 
         else if(contains(sql,"(drop table)(.+)"))
         {
             System.out.println("2)匹配正则表达式：drop table");
-            tmp = new DropTableSqlParser(sql);
+            tmp = new Drp_Tb_Sql_P(sql);
 
         }
 		else if(contains(sql,"(update)(.+)(set)(.+)"))
 		{
 			System.out.println("2)匹配正则表达式：update set");
-			tmp = new UpdateSqlParser(sql);
+			tmp = new Up_P(sql);
 
 		}
 		else if(contains(sql,"(create index on)(.+)")){
 			System.out.println("2)匹配正则表达式：create index on");
-			tmp=new CreateIndexSqlParser(sql);
+			tmp=new Cre_Id_P(sql);
 		}
 		else if(contains(sql,"(drop index on)(.+)")){
 			System.out.println("2)匹配正则表达式：drop index on");
-			tmp=new DropIndexSqlParser(sql);
+			tmp=new Drp_Id_P(sql);
 		}
 		else if(contains(sql,"(create user)")){
 			System.out.println("2)匹配正则表达式：create user");
-			tmp=new CreateUserSqlParser(sql);
+			tmp=new Cre_User_P(sql);
 		}
 		else if(contains(sql,"(alter table)(.+)(add)")){
 			System.out.println("2)匹配正则表达式：add");
-			tmp=new AddTableSqlParser(sql);
+			tmp=new Add_Tb_P(sql);
 
 		}
 		//[[alter table, tablename], [drop, conlums]]
 		else if(contains(sql,"(alter table)(.+)(drop)")){
 			System.out.println("2)匹配正则表达式：delete table");
-			tmp=new DeleteTableParser(sql);
+			tmp=new Drp_Tb_P(sql);
 
 		}//
 		else if(contains(sql,"(alter table)(.+)(modify)")){
 			System.out.println("2)匹配正则表达式：modify table");
-			tmp=new ModifyTableSqlParser(sql);
+			tmp=new Mod_Tb_P(sql);
 
 		}
 
 		else if(contains(sql,"(rename table)")){
 			System.out.println("2)匹配正则表达式：rename table");
-			tmp=new RenameTableSqlParser(sql);
+			tmp=new Re_Tb_P(sql);
 		}
 		else
 		{

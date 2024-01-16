@@ -4,10 +4,10 @@ package sqlparser;
  * 单句使用数据库语句解析器
  * 2018-4-14
  */
-public class CreateTableSqlParser extends BaseSingleSqlParser
+public class Cre_Tb_P extends Base_P
 {
 
-	public CreateTableSqlParser(String originalSql) {
+	public Cre_Tb_P(String originalSql) {
 		super(originalSql);
 
 	}
@@ -17,8 +17,8 @@ public class CreateTableSqlParser extends BaseSingleSqlParser
 	protected void initializeSegments()
 	{
 		//System.out.println("调用了CreateTableSqlParser的initializeSegments方法");
-		segments.add(new SqlSegment("(create table)(.+?)([(])","[,]"));
-		segments.add(new SqlSegment("([(])(.+?)([)] ENDOFSQL)","[,]"));
+		segments.add(new Sql_P("(create table)(.+?)([(])","[,]"));
+		segments.add(new Sql_P("([(])(.+?)([)] ENDOFSQL)","[,]"));
 
 	}
 

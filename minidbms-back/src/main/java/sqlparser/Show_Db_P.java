@@ -5,10 +5,10 @@ package sqlparser;
  * 2018-4-14
  */
 //correct
-public class ShowDatabaseSqlParser extends BaseSingleSqlParser
+public class Show_Db_P extends Base_P
 {
 
-	public ShowDatabaseSqlParser(String originalSql)
+	public Show_Db_P(String originalSql)
 	{
 		super(originalSql);
 		// TODO Auto-generated constructor stub
@@ -20,7 +20,7 @@ public class ShowDatabaseSqlParser extends BaseSingleSqlParser
 	{
 
 		//System.out.println("调用了ShowDatabaseSqlParser的initializeSegments方法");
-		segments.add(new SqlSegment("(show databases)(.+)(ENDOFSQL)","[,]"));
+		segments.add(new Sql_P("(show databases)(.+)(ENDOFSQL)","[,]"));
 	}
 
 }

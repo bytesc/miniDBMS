@@ -4,10 +4,10 @@ package sqlparser;
  * 2018-4-14
  */
 //correct
-public class CreateDatabaseSqlParser  extends BaseSingleSqlParser
+public class Cre_Db_P extends Base_P
 {
 
-	public CreateDatabaseSqlParser(String originalSql) {
+	public Cre_Db_P(String originalSql) {
 		super(originalSql);
 	}
 
@@ -16,7 +16,7 @@ public class CreateDatabaseSqlParser  extends BaseSingleSqlParser
 	@Override
 	protected void initializeSegments() {
 		//System.out.println("调用了CreateDatabaseSqlParser的initializeSegments方法");
-		segments.add(new SqlSegment("(create database)(.+)( ENDOFSQL)","[,]"));
+		segments.add(new Sql_P("(create database)(.+)( ENDOFSQL)","[,]"));
 
 	}
 

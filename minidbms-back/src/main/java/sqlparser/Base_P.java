@@ -3,24 +3,24 @@ package sqlparser;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseSingleSqlParser {
+public abstract class Base_P {
 
 	//原始Sql语句
 	protected String originalSql;
 
 	//Sql语句片段
-	protected List<SqlSegment> segments;
+	protected List<Sql_P> segments;
 
 
 	/** *//**
 	 　* 构造函数，传入原始Sql语句，进行劈分。
 	 　* @param originalSql
 	 　*/
-	public BaseSingleSqlParser(String originalSql)
+	public Base_P(String originalSql)
 	{
 		//System.out.println("调用了BaseSingleSqlParser的构造函数");
 		this.originalSql=originalSql;
-		segments=new ArrayList<SqlSegment>();
+		segments=new ArrayList<Sql_P>();
 		initializeSegments();
 		//splitSql2Segment();
 	}
@@ -41,7 +41,7 @@ public abstract class BaseSingleSqlParser {
 		List<List<String>> list=new ArrayList<List<String>>();
 
 		//System.out.println("调用了BaseSingleSqlParser的splitSql2Segment方法，用于分割sql为不同的模块");
-		for(SqlSegment sqlSegment:segments)    // int[] aaa = 1,2,3;   int a:aaa
+		for(Sql_P sqlSegment:segments)    // int[] aaa = 1,2,3;   int a:aaa
 		{
 			sqlSegment.parse(originalSql);
 			list.add(sqlSegment.getBodyPieces());
@@ -56,7 +56,7 @@ public abstract class BaseSingleSqlParser {
 	public String getParsedSql()
 	{
 		StringBuffer sb=new StringBuffer();
-		for(SqlSegment sqlSegment:segments)
+		for(Sql_P sqlSegment:segments)
 		{
 			sb.append(sqlSegment.getParsedSqlSegment()+"n");
 		}

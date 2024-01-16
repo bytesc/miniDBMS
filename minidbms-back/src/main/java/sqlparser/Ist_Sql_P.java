@@ -4,9 +4,9 @@ package sqlparser;
  * 单句插入语句解析器
  */
 //correct-test
-public class InsertSqlParser extends BaseSingleSqlParser{
+public class Ist_Sql_P extends Base_P {
 
-	public InsertSqlParser(String originalSql) {
+	public Ist_Sql_P(String originalSql) {
 		super(originalSql);
 
 	}
@@ -15,9 +15,9 @@ public class InsertSqlParser extends BaseSingleSqlParser{
 	protected void initializeSegments()
 	{
 		//System.out.println("调用了InsertSqlParser的initializeSegments方法");
-		segments.add(new SqlSegment("(insert into)(.+?)([(])","[,]"));
-		segments.add(new SqlSegment("([(])(.+?)([)] values[(])","[,]"));
-		segments.add(new SqlSegment("([)] values[(])(.+)([)] ENDOFSQL)","[,]"));
+		segments.add(new Sql_P("(insert into)(.+?)([(])","[,]"));
+		segments.add(new Sql_P("([(])(.+?)([)] values[(])","[,]"));
+		segments.add(new Sql_P("([)] values[(])(.+)([)] ENDOFSQL)","[,]"));
 
 	}
 

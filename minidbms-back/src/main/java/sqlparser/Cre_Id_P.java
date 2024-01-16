@@ -3,8 +3,8 @@ package sqlparser;
 /**
  * 创建索引的sql解析器
  */
-public class CreateIndexSqlParser extends BaseSingleSqlParser {
-    public CreateIndexSqlParser(String originalSql) {
+public class Cre_Id_P extends Base_P {
+    public Cre_Id_P(String originalSql) {
         super(originalSql);
 
     }
@@ -14,8 +14,8 @@ public class CreateIndexSqlParser extends BaseSingleSqlParser {
     protected void initializeSegments()
     {
         //System.out.println("调用了CreateTableSqlParser的initializeSegments方法");
-        segments.add(new SqlSegment("(create index on)(.+?)([(])","[,]"));
-        segments.add(new SqlSegment("([(])(.+?)([)] ENDOFSQL)","[,]"));
+        segments.add(new Sql_P("(create index on)(.+?)([(])","[,]"));
+        segments.add(new Sql_P("([(])(.+?)([)] ENDOFSQL)","[,]"));
 
     }
 

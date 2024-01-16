@@ -1,8 +1,8 @@
 package sqlparser;
 //没用
-public class SelectTableFromDatabaseSqlParser extends BaseSingleSqlParser{
+public class Sct_Tb_P extends Base_P {
 
-    public SelectTableFromDatabaseSqlParser(String originalSql)
+    public Sct_Tb_P(String originalSql)
     {
         super(originalSql);
         // TODO Auto-generated constructor stub
@@ -14,7 +14,7 @@ public class SelectTableFromDatabaseSqlParser extends BaseSingleSqlParser{
     {
 
         //System.out.println("调用了ShowDatabaseSqlParser的initializeSegments方法");
-        segments.add(new SqlSegment("(select table)(.+)(from)","[,]"));
-        segments.add(new SqlSegment("(from)(.+)(ENDOFSQL)","[,]"));
+        segments.add(new Sql_P("(select table)(.+)(from)","[,]"));
+        segments.add(new Sql_P("(from)(.+)(ENDOFSQL)","[,]"));
     }
 }

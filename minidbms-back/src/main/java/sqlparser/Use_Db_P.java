@@ -5,10 +5,10 @@ package sqlparser;
  * 2018-4-14
  */
 //correct
-public class UseDatabaseSqlParser extends BaseSingleSqlParser
+public class Use_Db_P extends Base_P
 {
 
-	public UseDatabaseSqlParser(String originalSql) {
+	public Use_Db_P(String originalSql) {
 		super(originalSql);
 	}
 
@@ -17,7 +17,7 @@ public class UseDatabaseSqlParser extends BaseSingleSqlParser
 	@Override
 	protected void initializeSegments() {
 		//System.out.println("调用了UserDatabaseSqlParser的initializeSegments方法");
-		segments.add(new SqlSegment("(use database)(.+)( ENDOFSQL)","[,]"));
+		segments.add(new Sql_P("(use database)(.+)( ENDOFSQL)","[,]"));
 	}
 
 }
