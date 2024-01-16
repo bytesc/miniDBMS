@@ -1,24 +1,33 @@
 package function;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Show_Tb {
     //show tables
-    public static Map<String, String> showTable(String dbname){
-        Map<String, String> returnMap = new HashMap<String, String>();
+    public static List<Map<String, String>> showTable(String dbname){
+        List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
         //数据库是否为空
         if(Is_Lg.isDatabaseEmpty()){
-            returnMap.put("result", "数据库为空");
-            return returnMap;
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("result", "数据库为空");
+            returnList.add(map);
+            return returnList;
         }
         File dir=new File("./minidata/"+dbname+"");
+
+        int i = 0;
         for(File file:dir.listFiles()){
             if(file.exists()){
-                returnMap.put("0", file.getName());
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("No", (i++) + "");
+                map.put("tableName", file.getName());
+                returnList.add(map);
             }
         }
-        return returnMap;
+        return returnList;
     }
 }

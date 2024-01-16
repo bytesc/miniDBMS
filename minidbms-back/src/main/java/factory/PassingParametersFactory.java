@@ -11,7 +11,15 @@ import java.util.*;
 public class PassingParametersFactory {
 
     public static Object dealParameters(List<List<String>> list) throws IOException, DocumentException {//将语句预处理后，生成的结果
+        /**
+         *  若无任何匹配，
+         *  默认返回为“操作有误”提示
+         */
         Object returnVal = null;
+        List<Map<String, String>> tempL = new ArrayList<Map<String, String>>();
+        HashMap<String, String> tempM = new HashMap<String, String>();
+        tempM.put("result", "操作有误");
+        tempL.add(tempM);
 
         List<String> ls = new ArrayList<String>();
         ls = list.get(0);//一开始的肯定是处理语句
