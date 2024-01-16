@@ -50,7 +50,7 @@ const DatabaseName = ref("")
 const handleDbRowOp = (dbName) =>{
   // console.log(dbName)
   DatabaseName.value = dbName
-  SqlStatement.content=`use ${dbName};\nshow tables;`
+  SqlStatement.content=`use database ${dbName};\nshow tables;`
   getTableData()
 }
 
@@ -62,7 +62,7 @@ const handleTableRowOp = (tbName)=>{
 }
 
 const handleTableRowDel = (row) => {
-  let key = Object.keys(row)[0]
+  let key = "id"
   let id = row[key]
   // 完整的 SQL 删除语句
   SqlStatement.content = `DELETE FROM ${tableName.value} WHERE ${key}=${id};`
@@ -184,7 +184,7 @@ SqlStatement.content=""
                   >
                   <el-button link type="primary" size="small"
                              @click="handleTableRowAdd(scope.row)"
-                  >添加</el-button
+                  >修改</el-button
                   >
                 </template>
               </el-table-column>
