@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <schools>
-  <school id="02" name="school2" location="location2"/>
-  <school id="12" name="school12" location="location12"/>
+  <school id="001" name="school2" location="location2"/>
+  <school id="002" name="school12" location="location12"/>
   <school id="13" name="school13" location="location13"/>
   <school id="14" name="school14" location="location14"/>
   <school id="15" name="school15" location="location16"/>
