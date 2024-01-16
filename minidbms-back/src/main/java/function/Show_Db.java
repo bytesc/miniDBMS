@@ -18,7 +18,7 @@ public class Show_Db {
 
             Map<String, String> map = new HashMap<String, String>();
             map.put("column", i + "");
-            map.put("tableName", files[i].getName());
+            map.put("DatabaseName", files[i].getName());
 
             list.add(map);
         }
