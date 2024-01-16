@@ -4,15 +4,24 @@ import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Ist_Tb_Dt {
 
     //insert into 表名(列名称1，列名称2) values(列值1，列值2);
-    public static void insertIntoTable(String dbName, String tbname, List<String> tmp1, List<String> tmp2) throws DocumentException, IOException {
+    public static List<Map<String, String>> insertIntoTable(String dbName, String tbname, List<String> tmp1, List<String> tmp2) throws DocumentException, IOException {
         //数据库是否合法
         if (!Is_Lg.isDatabase()) {
-            return;
+            // 只用于输出
+            List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("result", "数据库不合法");
+            list.add(map);
+
+            return list;
         }
         //表存在则打开配置文件
         File config_file= Is_Lg.isTable(dbName,tbname);
@@ -101,9 +110,15 @@ public class Ist_Tb_Dt {
                     Cre_Id.updateIndex_insert(tbname, tmp2.get(1), write_file_name);
                 }
             }
-
         }
 
+        // 只用于输出
+        List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("result", "插入成功");
+        list.add(map);
+
+        return list;
     }
 
 //    //insert into table_name values(id1,name1)
