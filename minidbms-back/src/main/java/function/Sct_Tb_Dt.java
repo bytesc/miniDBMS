@@ -368,7 +368,7 @@ public class Sct_Tb_Dt {
             List<Node> nodes = rootElement.selectNodes(tbName);
 
             for (Node node : nodes) {
-git                HashMap<String, String> map = new HashMap<String, String>();
+                HashMap<String, String> map = new HashMap<String, String>();
 
                 find1 = false;
                 Element node1 = (Element) node;
