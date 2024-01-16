@@ -123,7 +123,7 @@ public class PassingParametersFactory {
         }
         else if (sql_key.equals("drop database")) {
             System.out.println("3)调用方法：删除数据库");
-            Drp_Db.deleteDB((ls.get(1)));
+            returnVal = Drp_Db.deleteDB((ls.get(1)));
         }
         else if (sql_key.equals("drop table")) {
             System.out.println("3)调用方法：删除表");
