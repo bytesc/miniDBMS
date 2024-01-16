@@ -2,6 +2,7 @@ package display;
 
 import display.Status.ResponseVO;
 import function.Lg;
+import function.Use_Db;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,11 @@ public class Controller {
         ResponseVO responseVO = new ResponseVO(statement, login.work(statement));
 
         return responseVO;
+    }
+
+    @RequestMapping("/dbname")
+    public ResponseVO getDbname() {
+        return new ResponseVO("返回数据库名", login.lookDbname());
     }
 
     @Bean
