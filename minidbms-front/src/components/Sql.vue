@@ -5,6 +5,9 @@ defineProps({
   msg: String,
 })
 
+const addDialogVisible = ref(false)
+const altDialogVisible = ref(false)
+
 const activeIndex = ref('1')
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
@@ -22,6 +25,10 @@ const tableData = ref([
 ]);
 // 从 JSON 数据中提取列
 const columns = ref([]);
+
+const formLabelAlign = ref({
+})
+
 
 const onClear = () => {
   SqlStatement.content=""
@@ -42,6 +49,8 @@ const onHelp = () => {
 }
 
 const onLook = () => {
+  DatabaseName.value = ""
+  tableName.value = ""
   SqlStatement.content="show databases;"
   getTableData()
 }
@@ -50,6 +59,7 @@ const DatabaseName = ref("")
 const handleDbRowOp = (dbName) =>{
   // console.log(dbName)
   DatabaseName.value = dbName
+  tableName.value = ""
   SqlStatement.content=`use database ${dbName};\nshow tables;`
   getTableData()
 }
@@ -72,11 +82,50 @@ const handleTableRowDel = (row) => {
 }
 
 const handleTableRowAdd = (row)=>{
-  SqlStatement.content = `INSERT INTO ${tableName.value}(列名称1，列名称2，...)  values(列值1，列值2，...)`
+  // SqlStatement.content = `INSERT INTO ${tableName.value}(列名称1，列名称2，...)  values(列值1，列值2，...)`
+  addDialogVisible.value=true
+  formLabelAlign.value = Object.keys(tableData.value[0]).reduce((acc, key) => {
+    acc[key] = ''; // 将每个键的值设置为空字符串
+    return acc;
+  }, {});
+}
+const handleTableRowAddCommit = ()=>{
+  const buildInsertSql = (tableName, rowData) => {
+    const columns = Object.keys(rowData).join(', ');
+    const values = Object.keys(rowData).map(key => {
+      const value = rowData[key];
+      return typeof value === 'string' ? `${value}` : value;
+    }).join(', ');
+
+    return `INSERT INTO ${tableName}(${columns}) VALUES(${values});`;
+  };
+
+  SqlStatement.content = buildInsertSql(tableName.value, formLabelAlign.value);
+  getTableData();
+  addDialogVisible.value = false
 }
 
 const handleTableRowAlt = (row)=>{
-  SqlStatement.content = `update ${tableName.value} set 列名称1=列值1，列名称2=列值2，... where 列名称=列值`
+  // SqlStatement.content = `update ${tableName.value} set 列名称1=列值1，列名称2=列值2，... where 列名称=列值`
+  altDialogVisible.value=true
+  formLabelAlign.value = { ...row };
+
+}
+const handleTableRowAltCommit = ()=>{
+  const buildUpdateSql = (tableName, rowData, key) => {
+    const keyValue = rowData[key];
+    const setClause = Object.keys(rowData).filter(k => k !== key)
+        .map(k => {
+          const value = rowData[k];
+          return `${k}=${typeof value === 'string' ? `${value}` : value}`;
+        }).join(', ');
+
+    return `UPDATE ${tableName} SET ${setClause} WHERE ${key}=${keyValue};`;
+  };
+
+  SqlStatement.content = buildUpdateSql(tableName.value, formLabelAlign.value, 'id');
+  getTableData();
+  altDialogVisible.value = false
 }
 
 import {requestPack} from "../utils/requests.js";
@@ -241,6 +290,48 @@ SqlStatement.content=""
 
   </el-container>
 
+
+  <el-dialog
+      v-model="addDialogVisible"
+      title="添加数据"
+      width="30%"
+      align-center
+  >
+      <el-form label-width="100px" :model="formLabelAlign" label-position="left" style="max-width: 600px">
+        <el-form-item v-for="(value, key) in formLabelAlign" :key="key" :label="key">
+          <el-input v-model="formLabelAlign[key]" />
+        </el-form-item>
+      </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleTableRowAddCommit">
+          确定
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
+
+  <el-dialog
+      v-model="altDialogVisible"
+      title="修改数据"
+      width="30%"
+      align-center
+  >
+    <el-form label-width="100px" :model="formLabelAlign" label-position="left" style="max-width: 600px">
+      <el-form-item v-for="(value, key) in formLabelAlign" :key="key" :label="key">
+        <el-input v-model="formLabelAlign[key]" :disabled="key === 'id'"/>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="altDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleTableRowAltCommit">
+          确定
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <style scoped>
