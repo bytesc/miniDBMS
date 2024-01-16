@@ -78,7 +78,7 @@ public class PassingParametersFactory {
             List<String> tmp2 = list.get(2);
             List<String> tmp1 = list.get(1);
             //
-            Ist_Tb_Dt.insertIntoTable(Use_Db.dbName, ls.get(1), tmp1, tmp2);
+            returnVal = Ist_Tb_Dt.insertIntoTable(Use_Db.dbName, ls.get(1), tmp1, tmp2);
         }
         else if (sql_key.equals("select * from")) {
             //包含where条件

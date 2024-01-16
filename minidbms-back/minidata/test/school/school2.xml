@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <schools> 
-  <school id="23" name="school23" location="location23"/> 
+  <school id="23" name="school23" location="location23"/>  
+  <school id="201"  name=" wxs"  location=" loc11"/>
 </schools>
