@@ -5,30 +5,34 @@ import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Sct_Tb_Dt {
     //根据参数不同调用不同的查询方法
-    public static void select(String dbName, String tbName, List<String> columns, List<String> condition) throws DocumentException {
+    public static List<Map<String, String>> select(String dbName, String tbName, List<String> columns, List<String> condition) throws DocumentException {
+        List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
 
         //数据库是否为空
         if (Is_Lg.isDatabaseEmpty()) {
-            return;
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("result", "数据库为空");
+            returnList.add(map);
+            return returnList;
         }
         //表是否存在
         File config_file = Is_Lg.isTable(dbName, tbName);
         if (config_file == null) {
-            return;
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("result", "表不存在");
+            returnList.add(map);
+            return returnList;
         }
 
         //列名称为空，则查询语句为select * from 表名/select * from 表名 where 列名称=列值
         if (columns == null) {
             //条件为空，则查询语句为select * from 表名
             if (condition == null) {
-                selectFromTb(dbName, tbName);
+                returnList = selectFromTb(dbName, tbName);
             }
             //条件不为空，则查询语句为select * from 表名 where 列名称=列值
             else {
@@ -62,7 +66,7 @@ public class Sct_Tb_Dt {
                 }
             }
         }
-
+        return returnList;
     }
 
     public static void select2(String dbName, List<String> tbName, List<String> columns, List<String> condition) throws DocumentException {
@@ -93,7 +97,9 @@ public class Sct_Tb_Dt {
 
 
     //select * from 表名
-    public static void selectFromTb(String dbName, String tbName) throws DocumentException {
+    public static List<Map<String, String>> selectFromTb(String dbName, String tbName) throws DocumentException {
+        List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
+
         //若表存在，则得到最后一张子表的下标
         String file_num = Is_Lg.lastFileName(dbName, tbName);
 
@@ -109,15 +115,21 @@ public class Sct_Tb_Dt {
             List<Node> nodes = rootElement.selectNodes(tbName);
 
             for (Node node : nodes) {
+                // 只用于存储键值对并返回，与逻辑无关
+                HashMap<String, String> map = new HashMap<String, String>();
+
                 Element elementNode = (Element) node;
                 List<Attribute> list = elementNode.attributes();
                 for (Iterator i = list.iterator(); i.hasNext(); ) {
                     Attribute attribute = (Attribute) i.next();
                     System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
+
+                    map.put(attribute.getName(), attribute.getText());
                 }
-                System.out.println();
+                returnList.add(map);
             }
         }
+        return returnList;
     }
 
     //select * from 表名 where 列名称=列值

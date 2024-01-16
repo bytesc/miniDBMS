@@ -89,7 +89,7 @@ public class PassingParametersFactory {
             else {
                 System.out.println("3)调用方法：查询所有记录");
                 String tableName = list.get(0).get(1);
-                Sct_Tb_Dt.select(Use_Db.dbName, tableName,null,null);
+                returnVal = Sct_Tb_Dt.select(Use_Db.dbName, tableName,null,null);
             }
 
         }
