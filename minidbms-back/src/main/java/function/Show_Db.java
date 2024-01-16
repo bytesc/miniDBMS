@@ -22,7 +22,7 @@ public class Show_Db {
             String databaseName = files[i].getName();
             String[] splits = databaseName.split("/");
             if (!splits[splits.length - 1].contains(".")) {
-                map.put("column", i + "");
+                map.put("No", i + "");
                 map.put("databaseName", databaseName);
                 list.add(map);
             }
