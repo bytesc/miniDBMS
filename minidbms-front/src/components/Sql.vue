@@ -61,7 +61,14 @@ const handleTableRowOp = (tbName)=>{
   getTableData()
 }
 
-
+const handleTableRowDel = (row) => {
+  let key = Object.keys(row)[0]
+  let id = row[key]
+  // 完整的 SQL 删除语句
+  SqlStatement.content = `DELETE FROM ${tableName.value} WHERE ${key}=${id};`
+  // 调用函数以刷新数据
+  getTableData();
+}
 
 // const handleTableRowAdd = (row)=>{
 //
