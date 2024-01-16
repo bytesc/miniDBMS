@@ -110,9 +110,9 @@ public class PassingParametersFactory {
             String tableName2 = list.get(1).size() > 2 ? list.get(1).get(2) : null;
             if (tableName2!=null) {
                 List<String> tableNames = Arrays.asList(tableName, tableName2);
-                Sct_Tb_Dt.select2(Use_Db.dbName, tableNames, columns, condition);
+                returnVal = Sct_Tb_Dt.select2(Use_Db.dbName, tableNames, columns, condition);
             } else {
-                Sct_Tb_Dt.select(Use_Db.dbName, tableName, columns, condition);
+                returnVal = Sct_Tb_Dt.select(Use_Db.dbName, tableName, columns, condition);
             }
         }
         else if (sql_key.equals("update")) {
@@ -127,7 +127,7 @@ public class PassingParametersFactory {
         }
         else if (sql_key.equals("drop table")) {
             System.out.println("3)调用方法：删除表");
-            Del_Tb.deleteTable(Use_Db.dbName, ls.get(1));
+            returnVal = Del_Tb.deleteTable(Use_Db.dbName, ls.get(1));
         }
         else if (sql_key.equals("delete from")) {
             System.out.println("3)调用方法：删除指定记录");
