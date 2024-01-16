@@ -43,7 +43,7 @@ public class Mod_Tb {////[[alter table, tablename], [drop, conlums]]
             }
 
             Cre_Tb.writeIO(file,document);
-//
+///
         }
         System.out.println("表" + tbName + "修改字段成功");
         map.put("result", "表" + tbName + "修改字段成功");
