@@ -151,7 +151,7 @@ SqlStatement.content=""
               v-if="SqlStatement.content==='show databases;'">
                 <template #default="scope">
                   <el-button link type="primary" size="small"
-                             @click="handleDbRowOp(scope.row.DatabaseName)"
+                             @click="handleDbRowOp(scope.row.databaseName)"
                   >选择</el-button
                   >
                 </template>
