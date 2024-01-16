@@ -17,10 +17,15 @@ public class Show_Db {
         for(int i=0;i<files.length;i++){
 
             Map<String, String> map = new HashMap<String, String>();
-            map.put("column", i + "");
-            map.put("DatabaseName", files[i].getName());
 
-            list.add(map);
+            // 忽略带有.后缀的文件夹
+            String databaseName = files[i].getName();
+            String[] splits = databaseName.split("/");
+            if (!splits[splits.length - 1].contains(".")) {
+                map.put("No", i + "");
+                map.put("databaseName", databaseName);
+                list.add(map);
+            }
         }
         return list;
     }

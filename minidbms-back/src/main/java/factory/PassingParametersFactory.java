@@ -66,7 +66,7 @@ public class PassingParametersFactory {
                 map.put("result", "进入数据库" + Use_Db.dbName);
             }
 
-            returnVal = list;
+            returnVal =  tempL;
         }
         else if (sql_key.equals("create database")) {
             System.out.println("3)调用方法：创建数据库");

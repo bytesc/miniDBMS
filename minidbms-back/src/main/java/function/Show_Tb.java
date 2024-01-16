@@ -24,7 +24,12 @@ public class Show_Tb {
             if(file.exists()){
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("No", (i++) + "");
-                map.put("tableName", file.getName());
+                String fileName = file.getName();
+                // 不显示配置文件
+                if (fileName.endsWith(".xml")) {
+                    continue;
+                }
+                map.put("tableName", fileName);
                 returnList.add(map);
             }
         }
