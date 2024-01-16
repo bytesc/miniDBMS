@@ -10,9 +10,7 @@ import java.util.*;
  */
 public class PassingParametersFactory {
 
-    public static Object dealParameters(List<List<String>> list) throws IOException, DocumentException {//将语句预处理后，生成的结果
-        Object returnVal = null;
-
+    public static void dealParameters(List<List<String>> list) throws IOException, DocumentException {//将语句预处理后，生成的结果
         List<String> ls = new ArrayList<String>();
         ls = list.get(0);//一开始的肯定是处理语句
 //--------------------------------------------------------------------------------------------------------------------------------------
@@ -29,16 +27,16 @@ public class PassingParametersFactory {
             for (int i = 1; i < body.size(); i++) {
                 bodyList.add(body.get(i));
             }
-            returnVal = Cre_Tb.createTb(Use_Db.dbName, ls.get(1), bodyList);
+            Cre_Tb.createTb(Use_Db.dbName, ls.get(1), bodyList);
 
         }
         else if (sql_key.equals("show databases")) {
             System.out.println("3)调用方法：列出所有数据库");
-            returnVal = Show_Db.showDatabase();
+            Show_Db.showDatabase();
         }
         else if (sql_key.equals("show tables")) {
             System.out.println("3)调用方法：列出所有表");
-            returnVal = Show_Tb.showTable(Use_Db.dbName);
+            Show_Tb.showTable(Use_Db.dbName);
         }
         else if (sql_key.equals("use database")) {
             System.out.println("3)调用方法：进入数据库");
@@ -46,7 +44,7 @@ public class PassingParametersFactory {
             //if database illegal
             if (!Is_Lg.isDatabase()) {
                 Use_Db.dbName = null;
-                return returnVal;
+                return;
             }
 
         }
@@ -68,7 +66,13 @@ public class PassingParametersFactory {
                 System.out.println("3)调用方法：查询指定记录");
                 String tableName = list.get(0).get(1);
                 List<String> condition = list.get(1);
-                Sct_Tb_Dt.select(Use_Db.dbName, tableName, null, condition);
+                String tableName2 = list.get(1).size() > 2 ? list.get(1).get(2) : null;
+                if (tableName2!=null) {
+                    List<String> tableNames = Arrays.asList(tableName, tableName2);
+                    Sct_Tb_Dt.select2(Use_Db.dbName, tableNames, null, condition);
+                } else {
+                    Sct_Tb_Dt.select(Use_Db.dbName, tableName, null, condition);
+                }
 
             }
             else {
@@ -83,8 +87,13 @@ public class PassingParametersFactory {
             List<String> columns=list.get(0);
             List<String> condition = list.get(2);
             String tableName = list.get(1).get(1);
-
-            Sct_Tb_Dt.select(Use_Db.dbName, tableName, columns, condition);
+            String tableName2 = list.get(1).size() > 2 ? list.get(1).get(2) : null;
+            if (tableName2!=null) {
+                List<String> tableNames = Arrays.asList(tableName, tableName2);
+                Sct_Tb_Dt.select2(Use_Db.dbName, tableNames, columns, condition);
+            } else {
+                Sct_Tb_Dt.select(Use_Db.dbName, tableName, columns, condition);
+            }
         }
         else if (sql_key.equals("update")) {
             System.out.println("3)调用方法：更新指定记录");
@@ -123,8 +132,6 @@ public class PassingParametersFactory {
             System.out.println("3)调用方法：创建新用户");
             Cre_User.createUser();
         }
-
-        return returnVal;
     }
     /*
      * 当list参数为多行时，用于提取多行有效的参数。
