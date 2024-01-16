@@ -1,16 +1,5 @@
 package display.Status;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-<<<<<<< HEAD
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-=======
->>>>>>> origin/dev
 public class ResponseVO {
     private String code;
     private Object msg;
