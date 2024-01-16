@@ -91,26 +91,43 @@ const getTableData = async ()=>{
     </el-header>
 
     <el-container>
-      <el-main style="padding: 50px; margin-left: 100px;margin-right: 100px" >
-        <el-form :model="SqlStatement" label-width="120px" label-position="top">
-          <el-form-item label="SQL 语句">
-            <el-input v-model="SqlStatement.content" type="textarea" :rows="6"/>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="success" @click="onHelp">帮助</el-button>
-            <div style="flex-grow: 1;"/>
-            <el-button type="primary" @click="onSubmit">提交</el-button>
-            <el-button @click="onClear">清空</el-button>
-          </el-form-item>
-        </el-form>
+      <el-main style="padding: 50px; margin-left: 20px;margin-right: 20px" >
+        <el-row :gutter="20">
+          <el-col :xs="24" :sm="24" :md="14" :lg="16" :xl="16"
+          >
 
-        <el-table stripe :data="tableData" max-height="500">
-          <el-table-column
-              v-for="key in columns"
-              :prop="key"
-              :label="key"
-          ></el-table-column>
-        </el-table>
+            <el-table stripe :data="tableData" max-height="500">
+              <el-table-column
+                  v-for="key in columns"
+                  :prop="key"
+                  :label="key"
+                  sortable
+              ></el-table-column>
+            </el-table>
+
+          </el-col>
+
+          <el-col :xs="24" :sm="24" :md="10" :lg="8" :xl="8"
+          >
+
+            <el-form :model="SqlStatement" label-width="120px" label-position="top">
+              <el-form-item label="SQL 语句">
+                <el-input v-model="SqlStatement.content" type="textarea" :rows="12"/>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="success" @click="onHelp">帮助</el-button>
+                <div style="flex-grow: 1;"/>
+                <el-button type="primary" @click="onSubmit">提交</el-button>
+                <el-button @click="onClear">清空</el-button>
+              </el-form-item>
+            </el-form>
+
+          </el-col>
+
+        </el-row>
+
+
+
 
       </el-main>
       <el-footer style="padding: 0">
