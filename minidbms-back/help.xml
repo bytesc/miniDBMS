@@ -18,8 +18,10 @@
     <help>从表中查询数据：</help>
     <help>               select * from 表名</help>
     <help>               select * from 表名 where 列名称=列值</help>
+    <help>               select * from 表名1，表名2 where 表1列名称=表2列名称</help>
     <help>               select 列名称1，列名称2，... from 表名</help>
     <help>               select 列名称1，列名称2，... from 表名 where 列名称=列值</help>
+    <help>               select 列名称1，列名称2，... from 表名1，表名2 where 表1列名称=表2列名称</help>
     <help>更新表中数据：update 表名 set 列名称1=列值1，列名称2=列值2，... where 列名称=列值</help>
     <help></help>
     <help>创建索引：create index on 表名（主键列名称）</help>
