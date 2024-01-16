@@ -40,11 +40,9 @@ import {requestPack} from "../utils/requests.js";
 const getTableData = async ()=>{
   // let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
   let res= await requestPack.get(`/mydbms/index?statement=${SqlStatement.content}`)
-  // console.log(res)
-  console.log(tableData.value)
+  console.log(res)
   tableData.value = res.msg
-  // console.log(res.msg)
-  console.log(tableData.value)
+  console.log(res.msg)
   if (tableData.value.length > 0) {
     columns.value = Object.keys(tableData.value[0]);
   }
@@ -98,16 +96,36 @@ const getTableData = async ()=>{
           </el-form-item>
         </el-form>
 
-        <el-table :data="tableData">
+        <el-table stripe :data="tableData">
           <el-table-column
               v-for="key in columns"
-              :key="key"
               :prop="key"
               :label="key"
           ></el-table-column>
         </el-table>
 
       </el-main>
+      <el-footer style="padding: 0">
+<!--        <el-row :gutter="20">-->
+<!--          <el-col :span="16" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>-->
+<!--          <el-col :span="8" class="foot-item"><div class="grid-content ep-bg-purple"></div></el-col>-->
+<!--        </el-row>-->
+        <el-row :gutter="20">
+          <el-col :span="8" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
+          <el-col :span="8" class="foot-item"><div class="grid-content ep-bg-purple" >
+            <p style="text-align: center; color: #888888"><strong>庄家宝 任辰宇 史海云 谈伽辉 林金锐</strong></p>
+          </div></el-col>
+          <el-col :span="4" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
+          <el-col :span="4" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
+        </el-row>
+        <el-row :gutter="20" >
+          <el-col :span="4" class="foot-bottom"><div class="grid-content ep-bg-purple" ></div></el-col>
+          <el-col :span="16" class="foot-bottom"><div class="grid-content ep-bg-purple" >
+            <p style="text-align: center; color: #888888"><strong>© 2023 Copyright: bytesc</strong></p>
+          </div></el-col>
+          <el-col :span="4" class="foot-bottom"><div class="grid-content ep-bg-purple" ></div></el-col>
+        </el-row>
+      </el-footer>
     </el-container>
 
   </el-container>
@@ -118,4 +136,16 @@ const getTableData = async ()=>{
 .flex-grow {
   flex-grow: 1;
 }
+.foot-item{
+  padding: 0 !important;
+  background: #dadada;
+}
+.foot-bottom{
+  padding: 0 !important;
+  background: #ebebeb;
+}
+.grid-content {
+  min-height: 36px;
+}
+
 </style>
