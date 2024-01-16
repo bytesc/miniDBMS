@@ -69,7 +69,8 @@ public class Sct_Tb_Dt {
         return returnList;
     }
 
-    public static void select2(String dbName, List<String> tbName, List<String> columns, List<String> condition) throws DocumentException {
+    public static Object select2(String dbName, List<String> tbName, List<String> columns, List<String> condition) throws DocumentException {
+        Object returnVal;
 
         //数据库是否为空
 //        if (Is_Lg.isDatabaseEmpty()) {
@@ -83,16 +84,14 @@ public class Sct_Tb_Dt {
 
         //列名称为空，则查询语句为select * from 表名/select * from 表名 where 列名称=列值
         if (columns == null) {
-            //条件为空，则查询语句为select * from 表名
-            if (condition == null) {
-            }
-            selectAllFromTb(dbName, tbName, condition);
+            //条件为空，则查询语句为select * from 表名(连接查询一般条件不为空)
+            returnVal = selectAllFromTb(dbName, tbName, condition);
         }
         else {
-            selectFromTb(dbName, tbName, columns, condition);
+            returnVal = selectFromTb(dbName, tbName, columns, condition);
         }
 
-
+        return returnVal;
     }
 
 
@@ -185,12 +184,15 @@ public class Sct_Tb_Dt {
         if (!condition_find) {
             HashMap<String, String> map = new HashMap<String, String>();
             map.put("result", "未找到要求数据");
+            returnList.add(map);
         }
         return returnList;
     }
 
     //select * from 表名1,表名2 where 列名称1=列名称2
-    public static void selectAllFromTb(String dbName, List<String> tbName, List<String> tmp1) throws DocumentException {
+    public static List<Map<String, String>> selectAllFromTb(String dbName, List<String> tbName, List<String> tmp1) throws DocumentException {
+        List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
+
         // 获取连接语句中的表名和连接条件
         String[] joinConditions = tmp1.get(0).split("=");
 
@@ -246,6 +248,8 @@ public class Sct_Tb_Dt {
                             Element node3 = (Element) node2;
                             List<Attribute> list2 = node3.attributes();
 
+                            HashMap<String, String> map = new HashMap<String, String>();
+
                             // 检查连接字段的值是否匹配
                             for (Attribute attribute2 : list2) {
                                 if (attribute2.getText().equals(joinValue)) {
@@ -255,6 +259,7 @@ public class Sct_Tb_Dt {
                                     for (Iterator i = list.iterator(); i.hasNext(); ) {
                                         Attribute attribute = (Attribute) i.next();
                                         System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
+                                        map.put(attribute.getName(), attribute.getText());
                                     }
 
                                     for (Iterator i = list2.iterator(); i.hasNext(); ) {
@@ -263,8 +268,10 @@ public class Sct_Tb_Dt {
                                             continue;
                                         }
                                         System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
+                                        map.put(attribute.getName(), attribute.getText());
                                     }
                                     System.out.println();
+                                    returnList.add(map);
                                 }
 
                                 break;
@@ -277,7 +284,12 @@ public class Sct_Tb_Dt {
 
         if (!conditionFind) {
             System.out.println("未找到匹配的记录");
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("result", "未找到匹配的记录");
+            returnList.add(map);
         }
+
+        return returnList;
     }
 
     //select 列名称1，列名称2 from 表名
@@ -379,7 +391,9 @@ public class Sct_Tb_Dt {
         }
     }
 
-    public static void selectFromTb(String dbName, List<String> tbName, List<String> tmp2, List<String> tmp1) throws DocumentException {
+    public static List<Map<String, String>> selectFromTb(String dbName, List<String> tbName, List<String> tmp2, List<String> tmp1) throws DocumentException {
+        List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
+
         // 获取连接语句中的表名和连接条件
         String[] joinConditions = tmp1.get(0).split("=");
 
@@ -431,6 +445,8 @@ public class Sct_Tb_Dt {
 
                         List<Node> nodes2 = rootElement2.selectNodes(tbName.get(1));
 
+                        HashMap<String, String> map = new HashMap<String, String>();
+
                         for (Node node2 : nodes2) {
                             Element node3 = (Element) node2;
                             List<Attribute> list2 = node3.attributes();
@@ -447,6 +463,7 @@ public class Sct_Tb_Dt {
                                             continue;
                                         }
                                         System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
+                                        map.put(attribute.getName(), attribute.getText());
                                     }
 
                                     for (Iterator i = list2.iterator(); i.hasNext(); ) {
@@ -458,8 +475,10 @@ public class Sct_Tb_Dt {
                                             continue;
                                         }
                                         System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
+                                        map.put(attribute.getName(), attribute.getText());
                                     }
                                     System.out.println();
+                                    returnList.add(map);
                                 }
 
                                 break;
@@ -472,8 +491,12 @@ public class Sct_Tb_Dt {
 
         if (!conditionFind) {
             System.out.println("未找到匹配的记录");
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("result", "未找到匹配的记录");
+            returnList.add(map);
         }
 
+        return returnList;
     }
 
     //建立索引后的查询select 列名称1，列名称2 from 表名 where 列名称=列值
