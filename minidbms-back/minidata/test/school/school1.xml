@@ -3,7 +3,6 @@
 <schools> 
   <school id="002" name="school12" location="location12"/>  
   <school id="16" name="school16" location="location16"/>  
-  <school id="18" name="school18" location="location18"/>  
   <school id="19" name="school19" location="location19"/>  
   <school id="20" name="school20" location="location20"/> 
 </schools>

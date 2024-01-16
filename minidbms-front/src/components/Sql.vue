@@ -68,6 +68,7 @@ const handleTableRowDel = (row) => {
   SqlStatement.content = `DELETE FROM ${tableName.value} WHERE ${key}=${id};`
   // 调用函数以刷新数据
   getTableData();
+  SqlStatement.content =""
 }
 
 // const handleTableRowAdd = (row)=>{
@@ -132,7 +133,7 @@ SqlStatement.content=""
         <el-row :gutter="20">
           <el-col :xs="24" :sm="24" :md="14" :lg="16" :xl="16"
           >
-            <el-button type="success" @click="onLook">查看数据库</el-button>
+            <el-button type="success" @click="onLook">查看所有数据库</el-button>
             <el-button @click="handleDbRowOp(DatabaseName)"
                 v-if="DatabaseName!==''">
               {{ DatabaseName }}</el-button>
