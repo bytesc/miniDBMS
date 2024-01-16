@@ -7,6 +7,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,13 +15,15 @@ import java.util.Map;
 public class Cre_Tb {
     static public int entry_num=10;
     //create table 表名(列名称1 数据类型1，列名称2 数据类型2)
-    public static Map<String, String> createTb(String dbName, String tbName, List<String> tmp) throws IOException {
-        Map<String, String> returnMap = new HashMap<String, String>();
+    public static List<Map<String, String>> createTb(String dbName, String tbName, List<String> tmp) throws IOException {
+        List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
 
         //判断数据库是否为空
         if(Is_Lg.isDatabaseEmpty()){
+            Map<String, String> returnMap = new HashMap<String, String>();
             returnMap.put("result", "数据库为空");
-            return returnMap;
+            returnList.add(returnMap);
+            return returnList;
         }
         //创建一张表的文件夹，逻辑上表示一张表
         File tableFile=new File("./minidata/"+dbName+"/"+tbName+"");
@@ -28,8 +31,10 @@ public class Cre_Tb {
             tableFile.mkdir();
         }
         else{
+            Map<String, String> returnMap = new HashMap<String, String>();
             returnMap.put("result", "表已经存在");
-            return returnMap;
+            returnList.add(returnMap);
+            return returnList;
         }
         //创建配置文件并设置根节点
         File table=new File("./minidata/"+dbName+"/"+tbName+"/"+tbName+"-config.xml");
@@ -58,8 +63,10 @@ public class Cre_Tb {
         //写入操作
         writeIO(first_file,first_document);
 
-        returnMap.put("result", "表已经存在");
-        return returnMap;
+        Map<String, String> returnMap = new HashMap<String, String>();
+        returnMap.put("result", "表创建成功");
+        returnList.add(returnMap);
+        return returnList;
     }
     //更新document树，写入外存
     public static void writeIO(File write_file,Document write_document) throws IOException {
