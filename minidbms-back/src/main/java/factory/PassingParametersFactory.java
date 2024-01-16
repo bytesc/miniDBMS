@@ -129,6 +129,10 @@ public class PassingParametersFactory {
             System.out.println("3)调用方法：删除表");
             returnVal = Del_Tb.deleteTable(Use_Db.dbName, ls.get(1));
         }
+        else if (sql_key.equals("rename table")) {
+            System.out.println("3)调用方法：修改表名");
+            returnVal = Rne_Tb.renametable(ls.get(1),list.get(1).get(1),Use_Db.dbName);
+        }
         else if (sql_key.equals("delete from")) {
             System.out.println("3)调用方法：删除指定记录");
             //取出每个list中的start部分，只传递后面的参数部分；
