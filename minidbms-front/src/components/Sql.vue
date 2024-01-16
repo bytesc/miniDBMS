@@ -80,6 +80,7 @@ const handleTableRowAlt = (row)=>{
 }
 
 import {requestPack} from "../utils/requests.js";
+import {Box, ChatDotRound, CloseBold, Coin, Files, House, Plus, Refrigerator, Tickets} from "@element-plus/icons-vue";
 const getTableData = async ()=>{
   // let res= await request.get(`user/list/?pageSize=${pageSize.value}&pageNum=${cur}`)
   let res= await requestPack.get(`/mydbms/index?statement=${SqlStatement.content}`)
@@ -112,7 +113,7 @@ SqlStatement.content=""
           text-color="#fff"
           active-text-color="#ffd04b"
       >
-        <el-menu-item index="1"><h1><strong>MiniDBMS</strong></h1></el-menu-item>
+        <el-menu-item index="1"><h1><strong>MiniDBMS <el-icon><Refrigerator /></el-icon></strong></h1></el-menu-item>
         <div class="flex-grow" />
 <!--        <el-menu-item index="1">Processing Center</el-menu-item>-->
 <!--        <el-sub-menu index="2" v-if="DatabaseName!==''">-->
@@ -137,16 +138,17 @@ SqlStatement.content=""
         <el-row :gutter="20">
           <el-col :xs="24" :sm="24" :md="14" :lg="16" :xl="16"
           >
-            <el-button type="success" @click="onLook">查看所有数据库</el-button>
+            <el-button type="success" @click="onLook"><el-icon><Coin /></el-icon>数据库</el-button>
+            <el-button @click="handleDbRowOp(DatabaseName)"
+                       v-if="DatabaseName!==''">
+              <el-icon><Files /></el-icon>{{ DatabaseName }}</el-button>
+            <el-button  @click="handleTableRowOp(tableName)"
+                        v-if="tableName!==''">
+              <el-icon><Tickets /></el-icon>{{ tableName }}</el-button>
             <el-button type="success" @click="handleTableRowAdd"
                        v-if="SqlStatement.content.match('select') && tableName!==''"
-            >添加</el-button>
-            <el-button @click="handleDbRowOp(DatabaseName)"
-                v-if="DatabaseName!==''">
-              {{ DatabaseName }}</el-button>
-              <el-button  @click="handleTableRowOp(tableName)"
-                            v-if="tableName!==''">
-                {{ tableName }}</el-button>
+            ><el-icon><Plus /></el-icon> 添加</el-button>
+
             <el-table stripe :data="tableData" max-height="500">
               <el-table-column
                   v-for="key in columns"
@@ -200,10 +202,10 @@ SqlStatement.content=""
                 <el-input v-model="SqlStatement.content" type="textarea" :rows="12"/>
               </el-form-item>
               <el-form-item>
-                <el-button type="success" @click="onHelp">帮助</el-button>
+                <el-button type="success" @click="onHelp"><el-icon><ChatDotRound /></el-icon>帮助</el-button>
                 <div style="flex-grow: 1;"/>
-                <el-button type="primary" @click="onSubmit">提交</el-button>
-                <el-button @click="onClear">清空</el-button>
+                <el-button type="primary" @click="onSubmit"><el-icon><Select /> </el-icon> 提交</el-button>
+                <el-button @click="onClear"><el-icon><CloseBold /></el-icon> 清空</el-button>
               </el-form-item>
             </el-form>
 
