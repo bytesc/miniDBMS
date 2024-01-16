@@ -45,6 +45,8 @@ const onClear = () => {
 const onSubmit = () => {
   // console.log('submit!')
   // console.log(SqlStatement.content)
+  CurTableName.value=""
+  CurDatabaseName.value=""
   getTableData()
 }
 
