@@ -119,7 +119,7 @@ public class PassingParametersFactory {
             System.out.println("3)调用方法：更新指定记录");
 
             List<List<String>> tmp = getPararmeterList(list);
-            Up_Tb_Dt.updateTable(Use_Db.dbName, list.get(0).get(1), tmp);
+            returnVal = Up_Tb_Dt.updateTable(Use_Db.dbName, list.get(0).get(1), tmp);
         }
         else if (sql_key.equals("drop database")) {
             System.out.println("3)调用方法：删除数据库");

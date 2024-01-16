@@ -9,6 +9,6 @@
   <school id="10" name="school10" location="location10"/>  
   <school id="11" name="school11" location="location11"/>  
   <school id="03" name="school3" location="location3"/>  
-  <school id="22" name="school22" location="location22"/>  
-  <school id="201"  name=" wxs"  location=" loc11"/>
+  <school id="22" name="school22" location="sh"/>  
+  <school id="201" name=" wxs" location=" loc11"/> 
 </schools>
