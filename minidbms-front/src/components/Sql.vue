@@ -113,7 +113,7 @@ SqlStatement.content=""
           text-color="#fff"
           active-text-color="#ffd04b"
       >
-        <el-menu-item index="1"><h1><strong>MiniDBMS <el-icon><Refrigerator /></el-icon></strong></h1></el-menu-item>
+        <el-menu-item index="1"><h1><strong>MiniDBMS</strong></h1></el-menu-item>
         <div class="flex-grow" />
 <!--        <el-menu-item index="1">Processing Center</el-menu-item>-->
 <!--        <el-sub-menu index="2" v-if="DatabaseName!==''">-->
@@ -185,7 +185,7 @@ SqlStatement.content=""
                   >删除</el-button
                   >
                   <el-button link type="primary" size="small"
-                             @click="handleTableRowAdd(scope.row)"
+                             @click="handleTableRowAlt(scope.row)"
                   >修改</el-button
                   >
                 </template>
