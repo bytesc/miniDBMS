@@ -345,7 +345,7 @@ public class Sct_Tb_Dt {
     }
 
     //select 列名称1，列名称2 from 表名 where 列名称=列值
-    public static List<Map<String, String>> selectFromTb(String dbName, String tbName, List<String> tmp2, List<String> tmp1) throws DocumentException {
+    public static List<Map<String, String>> selectFromTb(String dbName, String tbName, List<String> tmp1, List<String> tmp2) throws DocumentException {
         List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
 
         //若表存在，则得到表的最后一个文件下标
