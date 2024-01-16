@@ -71,9 +71,13 @@ const handleTableRowDel = (row) => {
   SqlStatement.content =""
 }
 
-// const handleTableRowAdd = (row)=>{
-//
-// }
+const handleTableRowAdd = (row)=>{
+  SqlStatement.content = `INSERT INTO ${tableName.value}(列名称1，列名称2，...)  values(列值1，列值2，...)`
+}
+
+const handleTableRowAlt = (row)=>{
+  SqlStatement.content = `update ${tableName.value} set 列名称1=列值1，列名称2=列值2，... where 列名称=列值`
+}
 
 import {requestPack} from "../utils/requests.js";
 const getTableData = async ()=>{
@@ -134,6 +138,9 @@ SqlStatement.content=""
           <el-col :xs="24" :sm="24" :md="14" :lg="16" :xl="16"
           >
             <el-button type="success" @click="onLook">查看所有数据库</el-button>
+            <el-button type="success" @click="handleTableRowAdd"
+                       v-if="SqlStatement.content.match('select') && tableName!==''"
+            >添加</el-button>
             <el-button @click="handleDbRowOp(DatabaseName)"
                 v-if="DatabaseName!==''">
               {{ DatabaseName }}</el-button>
@@ -168,17 +175,17 @@ SqlStatement.content=""
                 </template>
               </el-table-column>
 
-              <el-table-column fixed="right" label="" width="60"
+              <el-table-column fixed="right" label="" width="120"
                                v-if="SqlStatement.content.match('select') && tableName!==''">
                 <template #default="scope">
                   <el-button link type="danger" size="small"
                              @click="handleTableRowDel(scope.row)"
                   >删除</el-button
                   >
-<!--                  <el-button link type="primary" size="small"-->
-<!--                             @click="handleTableRowAdd(scope.row)"-->
-<!--                  >添加</el-button-->
-<!--                  >-->
+                  <el-button link type="primary" size="small"
+                             @click="handleTableRowAdd(scope.row)"
+                  >添加</el-button
+                  >
                 </template>
               </el-table-column>
             </el-table>
