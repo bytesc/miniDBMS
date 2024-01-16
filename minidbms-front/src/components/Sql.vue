@@ -26,14 +26,20 @@ const tableData = ref([
 // 从 JSON 数据中提取列
 const columns = ref([]);
 
-const formLabelAlign = ref({
+const SubmitData = ref({
 })
+
+const CurDatabaseName = ref("")
+const CurTableName = ref("")
 
 
 const onClear = () => {
   SqlStatement.content=""
   tableData.value=[]
   columns.value=[]
+  SubmitData.value={}
+  CurTableName.value=""
+  CurDatabaseName.value=""
 }
 
 const onSubmit = () => {
@@ -43,30 +49,31 @@ const onSubmit = () => {
 }
 
 const onHelp = () => {
+  onClear()
   SqlStatement.content="help"
   getTableData()
   SqlStatement.content=""
 }
 
 const onLook = () => {
-  DatabaseName.value = ""
-  tableName.value = ""
+  CurDatabaseName.value = ""
+  CurTableName.value = ""
   SqlStatement.content="show databases;"
   getTableData()
 }
 
-const DatabaseName = ref("")
+
 const handleDbRowOp = (dbName) =>{
   // console.log(dbName)
-  DatabaseName.value = dbName
-  tableName.value = ""
+  CurDatabaseName.value = dbName
+  CurTableName.value = ""
   SqlStatement.content=`use database ${dbName};\nshow tables;`
   getTableData()
 }
 
-const tableName = ref("")
+
 const handleTableRowOp = (tbName)=>{
-  tableName.value = tbName
+  CurTableName.value = tbName
   SqlStatement.content=`select * from ${tbName};`
   getTableData()
 }
@@ -75,7 +82,7 @@ const handleTableRowDel = (row) => {
   let key = "id"
   let id = row[key]
   // 完整的 SQL 删除语句
-  SqlStatement.content = `DELETE FROM ${tableName.value} WHERE ${key}=${id};`
+  SqlStatement.content = `DELETE FROM ${CurTableName.value} WHERE ${key}=${id};`
   // 调用函数以刷新数据
   getTableData();
   SqlStatement.content =""
@@ -84,7 +91,7 @@ const handleTableRowDel = (row) => {
 const handleTableRowAdd = (row)=>{
   // SqlStatement.content = `INSERT INTO ${tableName.value}(列名称1，列名称2，...)  values(列值1，列值2，...)`
   addDialogVisible.value=true
-  formLabelAlign.value = Object.keys(tableData.value[0]).reduce((acc, key) => {
+  SubmitData.value = Object.keys(tableData.value[0]).reduce((acc, key) => {
     acc[key] = ''; // 将每个键的值设置为空字符串
     return acc;
   }, {});
@@ -100,7 +107,7 @@ const handleTableRowAddCommit = ()=>{
     return `INSERT INTO ${tableName}(${columns}) VALUES(${values});`;
   };
 
-  SqlStatement.content = buildInsertSql(tableName.value, formLabelAlign.value);
+  SqlStatement.content = buildInsertSql(CurTableName.value, SubmitData.value);
   getTableData();
   addDialogVisible.value = false
 }
@@ -108,7 +115,7 @@ const handleTableRowAddCommit = ()=>{
 const handleTableRowAlt = (row)=>{
   // SqlStatement.content = `update ${tableName.value} set 列名称1=列值1，列名称2=列值2，... where 列名称=列值`
   altDialogVisible.value=true
-  formLabelAlign.value = { ...row };
+  SubmitData.value = { ...row };
 
 }
 const handleTableRowAltCommit = ()=>{
@@ -123,7 +130,7 @@ const handleTableRowAltCommit = ()=>{
     return `UPDATE ${tableName} SET ${setClause} WHERE ${key}=${keyValue};`;
   };
 
-  SqlStatement.content = buildUpdateSql(tableName.value, formLabelAlign.value, 'id');
+  SqlStatement.content = buildUpdateSql(CurTableName.value, SubmitData.value, 'id');
   getTableData();
   altDialogVisible.value = false
 }
@@ -141,10 +148,6 @@ const getTableData = async ()=>{
   }
 }
 // getTableData()
-
-SqlStatement.content="help"
-getTableData()
-SqlStatement.content=""
 
 </script>
 
@@ -188,26 +191,19 @@ SqlStatement.content=""
           <el-col :xs="24" :sm="24" :md="14" :lg="16" :xl="16"
           >
             <el-button type="success" @click="onLook"><el-icon><Coin /></el-icon>数据库</el-button>
-            <el-button @click="handleDbRowOp(DatabaseName)"
-                       v-if="DatabaseName!==''">
-              <el-icon><Files /></el-icon>{{ DatabaseName }}</el-button>
-            <el-button  @click="handleTableRowOp(tableName)"
-                        v-if="tableName!==''">
-              <el-icon><Tickets /></el-icon>{{ tableName }}</el-button>
+            <el-button @click="handleDbRowOp(CurDatabaseName)"
+                       v-if="CurDatabaseName!==''">
+              <el-icon><Files /></el-icon>{{ CurDatabaseName }}</el-button>
+            <el-button  @click="handleTableRowOp(CurTableName)"
+                        v-if="CurTableName!==''">
+              <el-icon><Tickets /></el-icon>{{ CurTableName }}</el-button>
             <el-button type="success" @click="handleTableRowAdd"
-                       v-if="SqlStatement.content.match('select') && tableName!==''"
+                       v-if="SqlStatement.content.match('select') && CurTableName!==''"
             ><el-icon><Plus /></el-icon> 添加</el-button>
 
             <el-table stripe :data="tableData" max-height="500">
-              <el-table-column
-                  v-for="key in columns"
-                  :prop="key"
-                  :label="key"
-                  sortable
-              ></el-table-column>
-
-              <el-table-column fixed="right" label="" width="60"
-              v-if="SqlStatement.content==='show databases;'">
+              <el-table-column fixed="left" label="" width="60"
+                               v-if="SqlStatement.content==='show databases;'">
                 <template #default="scope">
                   <el-button link type="primary" size="small"
                              @click="handleDbRowOp(scope.row.databaseName)"
@@ -216,8 +212,8 @@ SqlStatement.content=""
                 </template>
               </el-table-column>
 
-              <el-table-column fixed="right" label="" width="60"
-                               v-if="SqlStatement.content.match('show tables;') && DatabaseName!==''">
+              <el-table-column fixed="left" label="" width="60"
+                               v-if="SqlStatement.content.match('show tables;') && CurDatabaseName!==''">
                 <template #default="scope">
                   <el-button link type="primary" size="small"
                              @click="handleTableRowOp(scope.row.tableName)"
@@ -226,8 +222,15 @@ SqlStatement.content=""
                 </template>
               </el-table-column>
 
+              <el-table-column
+                  v-for="key in columns"
+                  :prop="key"
+                  :label="key"
+                  sortable
+              ></el-table-column>
+
               <el-table-column fixed="right" label="" width="120"
-                               v-if="SqlStatement.content.match('select') && tableName!==''">
+                               v-if="SqlStatement.content.match('select') && CurTableName!==''">
                 <template #default="scope">
                   <el-button link type="danger" size="small"
                              @click="handleTableRowDel(scope.row)"
@@ -271,17 +274,19 @@ SqlStatement.content=""
 <!--          <el-col :span="8" class="foot-item"><div class="grid-content ep-bg-purple"></div></el-col>-->
 <!--        </el-row>-->
         <el-row :gutter="20">
-          <el-col :span="8" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
-          <el-col :span="8" class="foot-item"><div class="grid-content ep-bg-purple" >
-            <p style="text-align: center; color: #888888"><strong>庄家宝 史海云 任辰宇 谈伽辉 林金锐</strong></p>
+          <el-col :span="1" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
+          <el-col :span="22" class="foot-item"><div class="grid-content ep-bg-purple" >
+            <p style="text-align: center; color: #888888">组长:庄家宝 前端:任辰宇 后端:史海云 数据:谈伽辉 林金锐</p>
           </div></el-col>
-          <el-col :span="4" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
-          <el-col :span="4" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
+          <el-col :span="1" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
         </el-row>
         <el-row :gutter="20" >
           <el-col :span="4" class="foot-bottom"><div class="grid-content ep-bg-purple" ></div></el-col>
           <el-col :span="16" class="foot-bottom"><div class="grid-content ep-bg-purple" >
-            <p style="text-align: center; color: #888888"><strong>© 2024 Copyright: bytesc</strong></p>
+            <a href="http://www.bytesc.top" >
+<!--              style="text-decoration: none;-->
+              <p style="text-align: center; color: #888888"><strong>© 2024 Copyright: bytesc</strong></p>
+            </a>
           </div></el-col>
           <el-col :span="4" class="foot-bottom"><div class="grid-content ep-bg-purple" ></div></el-col>
         </el-row>
@@ -297,9 +302,9 @@ SqlStatement.content=""
       width="30%"
       align-center
   >
-      <el-form label-width="100px" :model="formLabelAlign" label-position="left" style="max-width: 600px">
-        <el-form-item v-for="(value, key) in formLabelAlign" :key="key" :label="key">
-          <el-input v-model="formLabelAlign[key]" />
+      <el-form label-width="100px" :model="SubmitData" label-position="left" style="max-width: 600px">
+        <el-form-item v-for="(value, key) in SubmitData" :key="key" :label="key">
+          <el-input v-model="SubmitData[key]" />
         </el-form-item>
       </el-form>
     <template #footer>
@@ -318,9 +323,9 @@ SqlStatement.content=""
       width="30%"
       align-center
   >
-    <el-form label-width="100px" :model="formLabelAlign" label-position="left" style="max-width: 600px">
-      <el-form-item v-for="(value, key) in formLabelAlign" :key="key" :label="key">
-        <el-input v-model="formLabelAlign[key]" :disabled="key === 'id'"/>
+    <el-form label-width="100px" :model="SubmitData" label-position="left" style="max-width: 600px">
+      <el-form-item v-for="(value, key) in SubmitData" :key="key" :label="key">
+        <el-input v-model="SubmitData[key]" :disabled="key === 'id'"/>
       </el-form-item>
     </el-form>
     <template #footer>
