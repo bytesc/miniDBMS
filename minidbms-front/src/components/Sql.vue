@@ -125,7 +125,7 @@ const handleTableRowAltCommit = ()=>{
         .map(k => {
           const value = rowData[k];
           return `${k}=${typeof value === 'string' ? `${value}` : value}`;
-        }).join(', ');
+        }).join(',');
 
     return `UPDATE ${tableName} SET ${setClause} WHERE ${key}=${keyValue};`;
   };
