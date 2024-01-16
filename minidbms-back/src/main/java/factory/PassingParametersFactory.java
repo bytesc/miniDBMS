@@ -52,12 +52,21 @@ public class PassingParametersFactory {
         else if (sql_key.equals("use database")) {
             System.out.println("3)调用方法：进入数据库");
             Use_Db.dbName = ls.get(1);
+
+            // 处理输出，与原本逻辑无耦合
+            tempL = new ArrayList<Map<String, String>>();
+            HashMap<String, String> map = new HashMap<String, String>();
+            tempL.add(map);
+
             //if database illegal
             if (!Is_Lg.isDatabase()) {
                 Use_Db.dbName = null;
-                return returnVal;
+                map.put("result", "数据库不合法");
+            } else {
+                map.put("result", "进入数据库" + Use_Db.dbName);
             }
 
+            returnVal = list;
         }
         else if (sql_key.equals("create database")) {
             System.out.println("3)调用方法：创建数据库");

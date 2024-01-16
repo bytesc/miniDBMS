@@ -16,7 +16,7 @@ import java.util.List;
 public class Lg {
     public Object work(String statement) throws IOException, DocumentException {
         Object returnVal = null;
-
+        Object ans = null;
 //        System.out.println("欢迎进入My-Simple-Dbms,请先登录");
 //        //声明一个变量a，记录用户输入错误次数，超过3此则退出系统
 //        int a=3;
@@ -72,29 +72,56 @@ public class Lg {
         sql = sql.trim(); // 去除字符串两侧的空白字符
         sql = sql.toLowerCase();//全部转为小写
         sql = sql.replaceAll("\\s+", " ");// 将sql中的连续空白字符替换为一个空格
-        sql = sql.substring(0, sql.lastIndexOf(";"));// 去除SQL语句末尾的分号
-        sql = "" + sql + " ENDOFSQL";
-        System.out.println("1)SQL预处理结果: " + sql);
+        String[] sqlStatements = sql.split(";");
+        for (String statement1 : sqlStatements) {
+            System.out.println("1)SQL预处理结果: " + statement1.trim() + " ENDOFSQL");
+            statement1 = "" + statement1 + " ENDOFSQL";
 
-        List<List<String>> parameter_list = new ArrayList<List<String>>();//缓存sql body信息的list
+            List<List<String>> parameter_list = new ArrayList<List<String>>();//缓存sql body信息的list
 
-        if (sql.equals("quit ENDOFSQL")) {
-            return "退出";
-        } else {
-            //将预处理后的SQL语句匹配SQL正则表达式，返回含有SQL的body信息的List
-            try {
-                parameter_list = SingleSqlParserFactory.generateParser(sql);
-            } catch (Exception e) {
-                e.printStackTrace();//异常处理，不用管
+            if (statement1.equals("quit ENDOFSQL")) {
+                continue;
+            } else {
+                //将预处理后的SQL语句匹配SQL正则表达式，返回含有SQL的body信息的List
+                try {
+                    parameter_list = SingleSqlParserFactory.generateParser(statement1);
+                } catch (Exception e) {
+                    e.printStackTrace();//异常处理，不用管
 
+                }
+                //根据SQL的body部分，调用相应的功能模块
+                try {
+                    returnVal = PassingParametersFactory.dealParameters(parameter_list);
+                    
+                } catch (Exception e) {
+                    e.printStackTrace();//异常处理，不用管
+                }
             }
-            //根据SQL的body部分，调用相应的功能模块
-            try {
-                returnVal = PassingParametersFactory.dealParameters(parameter_list);
-            } catch (Exception e) {
-                e.printStackTrace();//异常处理，不用管
-            }
+            
         }
+//        sql = sql.substring(0, sql.lastIndexOf(";"));// 去除SQL语句末尾的分号
+//        sql = "" + sql + " ENDOFSQL";
+//        System.out.println("1)SQL预处理结果: " + sql);
+//
+//        List<List<String>> parameter_list = new ArrayList<List<String>>();//缓存sql body信息的list
+//
+//        if (sql.equals("quit ENDOFSQL")) {
+//            return "退出";
+//        } else {
+//            //将预处理后的SQL语句匹配SQL正则表达式，返回含有SQL的body信息的List
+//            try {
+//                parameter_list = SingleSqlParserFactory.generateParser(sql);
+//            } catch (Exception e) {
+//                e.printStackTrace();//异常处理，不用管
+//
+//            }
+//            //根据SQL的body部分，调用相应的功能模块
+//            try {
+//                returnVal = PassingParametersFactory.dealParameters(parameter_list);
+//            } catch (Exception e) {
+//                e.printStackTrace();//异常处理，不用管
+//            }
+//        }
 
         return returnVal;
     }
