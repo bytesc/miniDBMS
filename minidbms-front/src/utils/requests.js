@@ -9,7 +9,7 @@ import "nprogress/nprogress.css";
 
 // 全局配置
 const service = axios.create({
-    baseURL:"/api",
+    baseURL:"/",
     timeout:10000,  //请求超时
 })
 
@@ -21,24 +21,25 @@ service.interceptors.request.use(config => {
 // 响应拦截
 service.interceptors.response.use(res=>{
         NProgress.done()
-        if (!res.headers['content-type'].includes('application/json')) {
-            return res;
-        }
+        // if (!res.headers['content-type'].includes('application/json')) {
+        //     return res;
+        // }
         // console.log(res)
         // res为获取的所有数据
         // console.log(res)
-        const {code,data,msg} = res.data
+        // const {code,data,msg} = res.data
         // code,data,msg是后端返回json里的三个字段（后端随便约定）
         // code是后端随便约定的状态标识码（不是http状态码）
-        if (code === "200" || code === "201" ){
-
-            return data
-        }else if(code === "400"){
-            // 后端返回失败
-            ElMessage.error(msg)
-            console.log(res.data)
-            return data
-        }
+        // if (code === "200" || code === "201" ){
+        //
+        //     return data
+        // }else if(code === "400"){
+        //     // 后端返回失败
+        //     ElMessage.error(msg)
+        //     console.log(res.data)
+        //     return data
+        // }
+        return res.data
     },
     error => {
         NProgress.done()

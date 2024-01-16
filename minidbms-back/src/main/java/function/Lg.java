@@ -12,11 +12,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Lg {
-    public static Object main(String statement) throws IOException, DocumentException {
-         Object returnVal = null;
+    public Object work(String statement) throws IOException, DocumentException {
+        Object returnVal = null;
 
 //        System.out.println("欢迎进入My-Simple-Dbms,请先登录");
 //        //声明一个变量a，记录用户输入错误次数，超过3此则退出系统
@@ -46,13 +45,6 @@ public class Lg {
 //                }
 //            }
 //        }
-
-        //加载索引文件到内存
-        if (Is_Lg.need_loadIndex()) {
-            Cre_Id.loadIndex();
-        }
-
-        Use_Db.dbName = "test";
 
         //System.out.println("请输入SQL语句：（您可以输入help以查询SQL语句帮助）");
         @SuppressWarnings("resource")
@@ -116,5 +108,19 @@ public class Lg {
             Element element = (Element) node;
             System.out.println(element.getText());
         }
+    }
+
+    public Lg() {
+        try {
+            //加载索引文件到内存
+            if (Is_Lg.need_loadIndex()) {
+                Cre_Id.loadIndex();
+            }
+
+            Use_Db.dbName = "test";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("加载成功");
     }
 }

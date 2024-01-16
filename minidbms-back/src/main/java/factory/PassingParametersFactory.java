@@ -29,7 +29,7 @@ public class PassingParametersFactory {
             for (int i = 1; i < body.size(); i++) {
                 bodyList.add(body.get(i));
             }
-            Cre_Tb.createTb(Use_Db.dbName, ls.get(1), bodyList);
+            returnVal = Cre_Tb.createTb(Use_Db.dbName, ls.get(1), bodyList);
 
         }
         else if (sql_key.equals("show databases")) {
@@ -38,7 +38,7 @@ public class PassingParametersFactory {
         }
         else if (sql_key.equals("show tables")) {
             System.out.println("3)调用方法：列出所有表");
-            Show_Tb.showTable(Use_Db.dbName);
+            returnVal = Show_Tb.showTable(Use_Db.dbName);
         }
         else if (sql_key.equals("use database")) {
             System.out.println("3)调用方法：进入数据库");

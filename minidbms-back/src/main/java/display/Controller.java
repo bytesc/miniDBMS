@@ -1,8 +1,10 @@
-package com.rybin.display;
+package display;
 
-import com.rybin.display.Status.ResponseVO;
+import display.Status.ResponseVO;
 import function.Lg;
 import org.dom4j.DocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,8 +16,19 @@ import java.io.IOException;
 @RequestMapping("/mydbms")
 public class Controller {
 
+    @Autowired
+    Lg login;
+
     @RequestMapping("/index")
     public ResponseVO index(String statement) throws DocumentException, IOException {
-        return new ResponseVO(statement, Lg.main(statement));
+
+        ResponseVO responseVO = new ResponseVO(statement, login.work(statement));
+
+        return responseVO;
+    }
+
+    @Bean
+    public Lg getLogin() {
+        return new Lg();
     }
 }
