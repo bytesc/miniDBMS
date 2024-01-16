@@ -140,18 +140,18 @@ public class PassingParametersFactory {
             }
             Del_Tb_Dt.deleteFromTable(Use_Db.dbName, ls.get(1), tmp2);
         }
-        else if (sql_key.equals("create index on")) {
-            System.out.println("3)调用方法：创建索引");
-            Cre_Id.createIndex(Use_Db.dbName, list.get(0).get(1), list.get(1).get(1));
-        }
-        else if (sql_key.equals("drop index on")) {
-            System.out.println("3)调用方法：删除索引");
-            Drp_Id.dropIndex(Use_Db.dbName, list.get(0).get(1));
-        }
-        else if (sql_key.equals("create user")) {
-            System.out.println("3)调用方法：创建新用户");
-            Cre_User.createUser();
-        }
+//        else if (sql_key.equals("create index on")) {
+//            System.out.println("3)调用方法：创建索引");
+//            Cre_Id.createIndex(Use_Db.dbName, list.get(0).get(1), list.get(1).get(1));
+//        }
+//        else if (sql_key.equals("drop index on")) {
+//            System.out.println("3)调用方法：删除索引");
+//            Drp_Id.dropIndex(Use_Db.dbName, list.get(0).get(1));
+//        }
+//        else if (sql_key.equals("create user")) {
+//            System.out.println("3)调用方法：创建新用户");
+//            Cre_User.createUser();
+//        }
 
         return returnVal;
     }

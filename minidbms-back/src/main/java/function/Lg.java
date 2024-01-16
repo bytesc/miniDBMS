@@ -144,6 +144,10 @@ public class Lg {
         return list;
     }
 
+    public String lookDbname() {
+        return Use_Db.dbName;
+    }
+
     public Lg() {
         try {
             //加载索引文件到内存
