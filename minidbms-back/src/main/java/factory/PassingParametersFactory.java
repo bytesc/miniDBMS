@@ -82,7 +82,7 @@ public class PassingParametersFactory {
                     List<String> tableNames = Arrays.asList(tableName, tableName2);
                     Sct_Tb_Dt.select2(Use_Db.dbName, tableNames, null, condition);
                 } else {
-                    Sct_Tb_Dt.select(Use_Db.dbName, tableName, null, condition);
+                    returnVal = Sct_Tb_Dt.select(Use_Db.dbName, tableName, null, condition);
                 }
 
             }

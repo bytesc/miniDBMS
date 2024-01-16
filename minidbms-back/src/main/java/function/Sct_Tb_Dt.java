@@ -40,7 +40,7 @@ public class Sct_Tb_Dt {
                 String key = key_value[0];
                 //如果表没有建立主键索引或者不是通过主键查询，调用未创建索引的方法
                 if (!Is_Lg.hasIndex(dbName, tbName) || !Is_Lg.isIndex(config_file, key)) {
-                    selectAllFromTb(dbName, tbName, condition);
+                   returnList = selectAllFromTb(dbName, tbName, condition);
                 } else {
                     System.out.println("带索引的查询");
                     selectWithIndex(dbName, tbName, condition);
@@ -133,7 +133,9 @@ public class Sct_Tb_Dt {
     }
 
     //select * from 表名 where 列名称=列值
-    public static void selectAllFromTb(String dbName, String tbName, List<String> tmp1) throws DocumentException {
+    public static List<Map<String, String>> selectAllFromTb(String dbName, String tbName, List<String> tmp1) throws DocumentException {
+        List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
+
         //若表存在，则得到表的最后一个文件下标
         String file_num = Is_Lg.lastFileName(dbName, tbName);
         //标记是否找到记录
@@ -153,6 +155,9 @@ public class Sct_Tb_Dt {
             List<Node> nodes = rootElement.selectNodes(tbName);
 
             for (Node node : nodes) {
+                // 只用于存储键值对并返回，与逻辑无关
+                HashMap<String, String> map = new HashMap<String, String>();
+
                 find = false;
                 Element node1 = (Element) node;
                 List<Attribute> list = node1.attributes();
@@ -168,18 +173,20 @@ public class Sct_Tb_Dt {
                     for (Iterator i = list.iterator(); i.hasNext(); ) {
                         Attribute attribute = (Attribute) i.next();
                         System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
+
+                        map.put(attribute.getName(), attribute.getText());
                     }
                     System.out.println();
+                    returnList.add(map);
                 }
-
             }
         }
 
         if (!condition_find) {
-            System.out.println("未找到该记录");
-            return;
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("result", "未找到要求数据");
         }
-
+        return returnList;
     }
 
     //select * from 表名1,表名2 where 列名称1=列名称2
