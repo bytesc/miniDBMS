@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref,reactive } from 'vue'
+import { ref,reactive,computed } from 'vue'
 
 defineProps({
   msg: String,
@@ -56,6 +56,7 @@ const getTableData = async ()=>{
 // getTableData()
 
 
+
 </script>
 
 <template>
@@ -95,7 +96,6 @@ const getTableData = async ()=>{
         <el-row :gutter="20">
           <el-col :xs="24" :sm="24" :md="14" :lg="16" :xl="16"
           >
-
             <el-table stripe :data="tableData" max-height="500">
               <el-table-column
                   v-for="key in columns"
@@ -123,7 +123,6 @@ const getTableData = async ()=>{
             </el-form>
 
           </el-col>
-
         </el-row>
 
 
