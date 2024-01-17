@@ -2,7 +2,6 @@
 <helps>
     <help>SQL语句(所有语句以;结束)：</help>
     <help></help>
-    <help>创建新用户：create user</help>
     <help>创建数据库：create database 数据库名</help>
     <help>使用数据库：use database 数据库名</help>
     <help>删除数据库：drop database 数据库名</help>
@@ -30,8 +29,5 @@
     <help>               select 列名称1，列名称2，... from 表名1，表名2 where 表1列名称=表2列名称</help>
     <help>更新表中数据：update 表名 set 列名称1=列值1，列名称2=列值2，... where 列名称=列值</help>
     <help></help>
-    <help>创建索引：create index on 表名（主键列名称）</help>
-    <help>删除索引：drop index on 表名</help>
-    <help></help>
-    <help>退出：quit</help>
+    <help>ref: https://github.com/lerry-lee/simple-dbms</help>
    </helps>

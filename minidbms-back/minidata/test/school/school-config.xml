@@ -2,8 +2,9 @@
 
 <schools id="int" name="varchar(20)" location="varchar(50)"> 
   <school>2</school>  
-  <insertables>
-    <insertable>1</insertable>
+  <insertables> 
+    <insertable>1</insertable>  
+    <insertable>0</insertable>
   </insertables>  
   <index>0</index>  
   <index_name/> 

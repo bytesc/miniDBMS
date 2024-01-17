@@ -1,5 +1,5 @@
 package function;
-
+//tjh
 import java.io.File;
 //select table 表名称 from 数据库名称
 public class Sct_Db {

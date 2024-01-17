@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vegetables val="int"> 
+  <vegetable>1</vegetable>  
+  <insertables/>  
+  <index/>  
+  <index_name/> 
+</vegetables>
