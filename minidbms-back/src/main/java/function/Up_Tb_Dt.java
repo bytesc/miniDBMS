@@ -1,7 +1,5 @@
 package function;
 //rcy
-import bpulstree.BPlusTree;
-import bpulstree.Main;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
@@ -28,36 +26,22 @@ public class Up_Tb_Dt {
         String[] tmp2 = tmp.get(1).get(0).split("=");
         //key为where的列名称
         String key=tmp2[0];
-        //是否是主键查询
-        if(Is_Lg.isIndex(config_file,key)) {
-            BPlusTree tree= Cre_Id.findTree(tbName);
-            String file_name=tree.search(Integer.parseInt(key));
-            File file=new File("./minidata/"+dbName+"/"+tbName+"/"+file_name+".xml");
+
+
+        //扫描所有文件,j记录文件下表,num用来遍历所有文件
+        String this_file = Is_Lg.lastFileName(dbName, tbName);
+        for (int j = Integer.parseInt(this_file); j >= 0; j--) {
+            String num = "" + j;
+            File file = new File("./minidata/" + dbName + "/" + tbName + "/" + tbName + num + ".xml");
             find=update(tbName,file,tmp,tmp2);
-            if(!find){
-                System.out.println("更新失败，未找到记录");
-                map.put("result", "更新失败，未找到记录");
+            if(find){
+                map.put("result", "更新完成");
+                return returnList;
             }
-            //更新索引文件
-//            Cre_Id.updateIndex_update(tbName,key,tmp2[2]);
-            return returnList;
         }
-        else {
-            //扫描所有文件,j记录文件下表,num用来遍历所有文件
-            String this_file = Is_Lg.lastFileName(dbName, tbName);
-            for (int j = Integer.parseInt(this_file); j >= 0; j--) {
-                String num = "" + j;
-                File file = new File("./minidata/" + dbName + "/" + tbName + "/" + tbName + num + ".xml");
-                find=update(tbName,file,tmp,tmp2);
-                if(find){
-                    map.put("result", "更新完成");
-                    return returnList;
-                }
-            }
-            System.out.println("更新失败，未找到记录");
-            map.put("result", "更新失败，未找到记录");
-            return returnList;
-        }
+        System.out.println("更新失败，未找到记录");
+        map.put("result", "更新失败，未找到记录");
+        return returnList;
     }
 
     public static boolean update(String tbName,File file,List<List<String>> tmp,String[] tmp2) throws DocumentException, IOException {

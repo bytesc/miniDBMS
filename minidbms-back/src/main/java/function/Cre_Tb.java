@@ -49,8 +49,6 @@ public class Cre_Tb {
         rootElem.addElement(tbName).setText("0");
         //存储物理层可插入子表的下标
         rootElem.addElement("insertables");
-        //记录是否建有索引
-        rootElem.addElement("index");
         //记录主键名称
         rootElem.addElement("index_name");
         //写入操作

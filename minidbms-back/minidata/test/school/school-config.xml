@@ -5,7 +5,6 @@
   <insertables> 
     <insertable>1</insertable>  
     <insertable>0</insertable>
-  </insertables>  
-  <index>0</index>  
+  </insertables>
   <index_name/> 
 </schools>

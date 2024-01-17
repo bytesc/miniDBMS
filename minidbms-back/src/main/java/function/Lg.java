@@ -96,18 +96,4 @@ public class Lg {
     public String lookDbname() {
         return Use_Db.dbName;
     }
-
-    public Lg() {
-        try {
-            //加载索引文件到内存
-            if (Is_Lg.need_loadIndex()) {
-                Cre_Id.loadIndex();
-            }
-
-            Use_Db.dbName = "test";
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("加载成功");
-    }
 }
