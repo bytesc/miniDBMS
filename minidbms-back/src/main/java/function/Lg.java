@@ -1,5 +1,5 @@
 package function;
-// zjb
+// all
 import factory.*;
 
 import org.dom4j.Document;

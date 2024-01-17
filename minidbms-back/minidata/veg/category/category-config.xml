@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<categorys val="int">
-  <category>0</category>
-  <insertables/>
-  <index/>
-  <index_name/>
+<categorys val="int"> 
+  <category>1</category>  
+  <insertables/>  
+  <index/>  
+  <index_name/> 
 </categorys>

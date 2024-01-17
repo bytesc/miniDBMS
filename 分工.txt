@@ -26,7 +26,6 @@ Add_Tb
 Cre_Tb
 Drp_Tb
 Is_Lg 
-Lg
 Mod_Tb
 
 rcy：
