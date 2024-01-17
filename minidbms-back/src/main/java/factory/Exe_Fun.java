@@ -31,7 +31,7 @@ public class Exe_Fun {
         String sql_key = ls.get(0);
 
         if (sql_key.equals("create table")) {
-            System.out.println("3)调用方法：创建表");
+            System.out.println("进入function：创建表");
 
             List<String> bodyList = new ArrayList<String>();//传递参数
             List<String> body = list.get(1);
@@ -42,15 +42,15 @@ public class Exe_Fun {
 
         }
         else if (sql_key.equals("show databases")) {
-            System.out.println("3)调用方法：列出所有数据库");
+            System.out.println("进入function：列出所有数据库");
             returnVal = Show_Db.showDatabase();
         }
         else if (sql_key.equals("show tables")) {
-            System.out.println("3)调用方法：列出所有表");
+            System.out.println("进入function：列出所有表");
             returnVal = Show_Tb.showTable(Use_Db.dbName);
         }
         else if (sql_key.equals("use database")) {
-            System.out.println("3)调用方法：进入数据库");
+            System.out.println("进入function：进入数据库");
             Use_Db.dbName = ls.get(1);
 
             // 处理输出，与原本逻辑无耦合
@@ -69,11 +69,11 @@ public class Exe_Fun {
             returnVal =  tempL;
         }
         else if (sql_key.equals("create database")) {
-            System.out.println("3)调用方法：创建数据库");
+            System.out.println("进入function：创建数据库");
             returnVal=Cre_Db.createDB(ls.get(1));
         }
         else if (sql_key.equals("insert into")) {
-            System.out.println("3)调用方法：插入数据到表");
+            System.out.println("进入function：插入数据到表");
 
             List<String> tmp2 = list.get(2);
             List<String> tmp1 = list.get(1);
@@ -83,7 +83,7 @@ public class Exe_Fun {
         else if (sql_key.equals("select * from")) {
             //包含where条件
             if (list.size() > 1) {
-                System.out.println("3)调用方法：查询指定记录");
+                System.out.println("进入function：查询指定记录");
                 String tableName = list.get(0).get(1);
                 List<String> condition = list.get(1);
                 String tableName2 = list.get(0).size() > 2 ? list.get(0).get(2) : null;
@@ -96,14 +96,14 @@ public class Exe_Fun {
 
             }
             else {
-                System.out.println("3)调用方法：查询所有记录");
+                System.out.println("进入function：查询所有记录");
                 String tableName = list.get(0).get(1);
                 returnVal = Sct_Tb_Dt.select(Use_Db.dbName, tableName,null,null);
             }
 
         }
         else if (sql_key.equals("select")) {
-            System.out.println("3)调用方法：查询记录中的某些列");
+            System.out.println("进入function：查询记录中的某些列");
             List<String> columns=list.get(0);
             List<String> condition = list.get(2);
             String tableName = list.get(1).get(1);
@@ -116,25 +116,25 @@ public class Exe_Fun {
             }
         }
         else if (sql_key.equals("update")) {
-            System.out.println("3)调用方法：更新指定记录");
+            System.out.println("进入function：更新指定记录");
 
             List<List<String>> tmp = getPararmeterList(list);
             returnVal = Up_Tb_Dt.updateTable(Use_Db.dbName, list.get(0).get(1), tmp);
         }
         else if (sql_key.equals("drop database")) {
-            System.out.println("3)调用方法：删除数据库");
+            System.out.println("进入function：删除数据库");
             returnVal = Drp_Db.deleteDB((ls.get(1)));
         }
         else if (sql_key.equals("drop table")) {
-            System.out.println("3)调用方法：删除表");
+            System.out.println("进入function：删除表");
             returnVal = Del_Tb.deleteTable(Use_Db.dbName, ls.get(1));
         }
         else if (sql_key.equals("rename table")) {
-            System.out.println("3)调用方法：修改表名");
+            System.out.println("进入function：修改表名");
             returnVal = Rne_Tb.renametable(ls.get(1),list.get(1).get(1),Use_Db.dbName);
         }
         else if (sql_key.equals("delete from")) {
-            System.out.println("3)调用方法：删除指定记录");
+            System.out.println("进入function：删除指定记录");
             //取出每个list中的start部分，只传递后面的参数部分；
             List<String> tmp1 = list.get(1);
             List<String> tmp2 = new ArrayList<String>();
@@ -148,34 +148,34 @@ public class Exe_Fun {
         {   String cond = list.get(1).get(0);
             if(cond.equals("add"))
             {
-                System.out.println("3)调用方法：增加表字段");//[[alter table, tablename], [add, conlums=type]]
+                System.out.println("进入function：增加表字段");//[[alter table, tablename], [add, conlums=type]]
                 returnVal=Add_Tb.add(Use_Db.dbName,list.get(0).get(1),list.get(1));
 
             }
             if(cond.equals("drop"))////[[alter table, tablename], [drop, conlums]]
             {
-                System.out.println("3)调用方法：删除表字段");
+                System.out.println("进入function：删除表字段");
                 returnVal=Drp_Tb.delete(Use_Db.dbName,list.get(0).get(1),list.get(1));
 
             }
             if(cond.equals("modify"))//[[alter table, book], [modify, price=price1]]
             {
-                System.out.println("3)调用方法：修改表字段");
+                System.out.println("进入function：修改表字段");
                 returnVal=Mod_Tb.modify(Use_Db.dbName,list.get(0).get(1),list.get(1));
 
             }
 
         }
 //        else if (sql_key.equals("create index on")) {
-//            System.out.println("3)调用方法：创建索引");
+//            System.out.println("进入function：创建索引");
 //            Cre_Id.createIndex(Use_Db.dbName, list.get(0).get(1), list.get(1).get(1));
 //        }
 //        else if (sql_key.equals("drop index on")) {
-//            System.out.println("3)调用方法：删除索引");
+//            System.out.println("进入function：删除索引");
 //            Drp_Id.dropIndex(Use_Db.dbName, list.get(0).get(1));
 //        }
 //        else if (sql_key.equals("create user")) {
-//            System.out.println("3)调用方法：创建新用户");
+//            System.out.println("进入function：创建新用户");
 //            Cre_User.createUser();
 //        }
 
