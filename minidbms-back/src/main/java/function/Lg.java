@@ -16,13 +16,12 @@ import java.util.List;
 import java.util.Map;
 
 public class Lg {
-    public Object work(String statement) throws IOException, DocumentException {
+    public Object work(String sql) throws IOException, DocumentException {
         Object returnVal = null;
-        Object ans = null;
+
         //System.out.println("请输入SQL语句：（您可以输入help以查询SQL语句帮助）");
-        @SuppressWarnings("resource")
+
         //Scanner input = new Scanner(System.in);
-        String sql = statement;
 //            /*
 //             * 预处理:获得语句;
 //             * 处理前后空格;
@@ -60,7 +59,7 @@ public class Lg {
                 try {
                     parameter_list = Split_Sql.generateParser(statement1);
                 } catch (Exception e) {
-                    e.printStackTrace();//异常处理，不用管
+                    e.printStackTrace();
 
                 }
                 System.out.println(parameter_list);
@@ -69,7 +68,7 @@ public class Lg {
                     returnVal = Exe_Fun.dealParameters(parameter_list);
                     
                 } catch (Exception e) {
-                    e.printStackTrace();//异常处理，不用管
+                    e.printStackTrace();
                 }
             }
             
