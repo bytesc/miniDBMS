@@ -15,7 +15,7 @@ public class Split_Sql {
 	{
 		Base_P tmp = null;
 
-		if(contains(sql,"(create database)([^\\n]+)")) {// 判断字符串sql是否包含"(create database)"以及之后的任意字符
+		if(contains(sql,"(create database)([^\\n]+)")) {// 判断字符串sql是否包含"create database"以及之后的任意字符
 		System.out.println("2)匹配正则表达式：create database");
 		tmp = new Cre_Db_P(sql);
 		}
