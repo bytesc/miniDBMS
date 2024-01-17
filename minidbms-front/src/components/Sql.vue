@@ -278,7 +278,7 @@ const getTableData = async ()=>{
         <el-row :gutter="20">
           <el-col :span="1" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
           <el-col :span="22" class="foot-item"><div class="grid-content ep-bg-purple" >
-            <p style="text-align: center; color: #888888">组长:庄家宝 前端:任辰宇 后端:史海云 数据:谈伽辉 林金锐</p>
+            <p style="text-align: center; color: #888888">组长:庄家宝 前端:任辰宇 后端:史海云 数据库:谈伽辉 文档:林金锐</p>
           </div></el-col>
           <el-col :span="1" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
         </el-row>
