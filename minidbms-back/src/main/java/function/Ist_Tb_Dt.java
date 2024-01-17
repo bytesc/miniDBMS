@@ -120,44 +120,4 @@ public class Ist_Tb_Dt {
 
         return list;
     }
-
-//    //insert into table_name values(id1,name1)
-//    public static void inertIntoTable(String dbName,String t1,List<String> tmp) throws DocumentException, IOException {
-//        //if database illegal
-//        if(!Is_Lg.isDatabase()){
-//            return;
-//        }
-//        //create document object
-//        SAXReader saxReader=new SAXReader();
-//        Document document=saxReader.read("./minidata/"+dbName+"/"+t1+".xml");
-//        //System.out.println("open table");
-//
-//        //get root node
-//        Element rootElement=document.getRootElement();
-//        Element childElement=rootElement.element(t1);
-//        Element element;
-//        //node name array
-//        String[] nodesName=new String[childElement.elements().size()];
-//        //get all nodes name
-//        int j=0;
-//        for(Iterator i=childElement.elementIterator();i.hasNext();j++){
-//            element=(Element)i.next();
-//            nodesName[j]=element.getName();
-//            System.out.println(nodesName[j]);
-//        }
-//        childElement=rootElement.addElement(t1);
-//        for(int i=1;i<tmp.size();i++){
-//            childElement.addElement(nodesName[i-1]).setText(tmp.get(i));
-//        }
-//        //System.out.println("write data");
-//        OutputFormat outputFormat=OutputFormat.createPrettyPrint();
-//        outputFormat.setEncoding("UTF-8");
-//        XMLWriter xmlWriter;
-//        xmlWriter = new XMLWriter(new OutputStreamWriter(new FileOutputStream("./minidata/"+dbName+"/"+t1+".xml")),outputFormat);
-//        xmlWriter.write(document);
-//        xmlWriter.close();
-//        System.out.println("insert successfully");
-//
-//    }
-//
 }

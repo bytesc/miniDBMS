@@ -38,8 +38,6 @@ public class Up_Tb_Dt {
                 System.out.println("更新失败，未找到记录");
                 map.put("result", "更新失败，未找到记录");
             }
-            //更新索引文件
-//            Cre_Id.updateIndex_update(tbName,key,tmp2[2]);
             return returnList;
         }
         else {

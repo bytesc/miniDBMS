@@ -68,7 +68,7 @@ public class Del_Tb_Dt {
             return returnList;
         }
     }
-    //主键删除用delete方法
+    //删除用delete方法
     public static boolean delete(File file,String dbName,String tbName,String[] key_value,String last_num) throws DocumentException, IOException {
         SAXReader reader = new SAXReader();
         Document document = reader.read(file);
