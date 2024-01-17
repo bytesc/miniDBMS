@@ -16,56 +16,56 @@ public class Split_Sql {
 		Base_P tmp = null;
 
 		if(contains(sql,"(create database)([^\\n]+)")) {// 判断字符串sql是否包含"create database"以及之后的任意字符
-		System.out.println("2)匹配正则表达式：create database");
+		System.out.println("进入sqlparser：create database");
 		tmp = new Cre_Db_P(sql);
 		}
 		else if(contains(sql,"(drop database)(.+)"))
 		{
-			System.out.println("2)匹配正则表达式：drop database");
+			System.out.println("进入sqlparser：drop database");
 			tmp = new Drp_Db_P(sql);
 
 		}
 		else if(contains(sql,"(show databases)"))
 		{
-			System.out.println("2)匹配正则表达式：show databases");
+			System.out.println("进入sqlparser：show databases");
 			tmp = new Show_Db_P(sql);
 		}
 		else if(contains(sql,"(show tables)"))
 		{
-			System.out.println("2)匹配正则表达式：show tables");
+			System.out.println("进入sqlparser：show tables");
 			tmp = new Show_Tb_P(sql);
 		}
 		else if(contains(sql,"(use database)(.+)"))
 		{
-			System.out.println("2)匹配正则表达式：use database");
+			System.out.println("进入sqlparser：use database");
 			tmp = new Use_Db_P(sql);
 		}
 		else if(contains(sql,"(create table)(.+)"))
 		{
-			System.out.println("2)匹配正则表达式：create table");
+			System.out.println("进入sqlparser：create table");
 			tmp = new Cre_Tb_P(sql);
 
 		}
 		else if(contains(sql,"(insert into)(.+)(values)(.+)"))
 		{
-			System.out.println("2)匹配正则表达式：insert into");
+			System.out.println("进入sqlparser：insert into");
 			tmp = new Ist_Sql_P(sql);
 
 		}
 		else if(contains(sql,"(insert into)(.+)(valuess)(.+)()"))
 		{
-			System.out.println("2)匹配正则表达式：insert into where");
+			System.out.println("进入sqlparser：insert into where");
 			tmp = new Ist_Sct_Sql_P(sql);
 
 		}
 		else if(contains(sql,"(select \\* from)(.+)"))
 		{
 			if(contains(sql,"(select \\* from)(.+)(where)(.+)")){
-				System.out.println("2)匹配正则表达式：select * from where");
+				System.out.println("进入sqlparser：select * from where");
 				tmp=new Sct_All_Where_P(sql);
 			}
 			else {
-				System.out.println("2)匹配正则表达式：select * from");
+				System.out.println("进入sqlparser：select * from");
 				tmp = new Sct_All_P(sql);
 			}
 
@@ -73,61 +73,61 @@ public class Split_Sql {
 		else if(contains(sql,"(select)(.+)(from)(.+)"))
 		{
 
-			System.out.println("2)匹配正则表达式：select from");
+			System.out.println("进入sqlparser：select from");
 			tmp = new Sct_P(sql);
 
 		}
 
 		else if(contains(sql,"(delete from)(.+)"))
 		{
-			System.out.println("2)匹配正则表达式：delete from");
+			System.out.println("进入sqlparser：delete from");
 			tmp = new Del_Sql_P(sql);
 
 		}
 
         else if(contains(sql,"(drop table)(.+)"))
         {
-            System.out.println("2)匹配正则表达式：drop table");
+            System.out.println("进入sqlparser：drop table");
             tmp = new Drp_Tb_Sql_P(sql);
 
         }
 		else if(contains(sql,"(update)(.+)(set)(.+)"))
 		{
-			System.out.println("2)匹配正则表达式：update set");
+			System.out.println("进入sqlparser：update set");
 			tmp = new Up_P(sql);
 
 		}
 		else if(contains(sql,"(create index on)(.+)")){
-			System.out.println("2)匹配正则表达式：create index on");
+			System.out.println("进入sqlparser：create index on");
 			tmp=new Cre_Id_P(sql);
 		}
 		else if(contains(sql,"(drop index on)(.+)")){
-			System.out.println("2)匹配正则表达式：drop index on");
+			System.out.println("进入sqlparser：drop index on");
 			tmp=new Drp_Id_P(sql);
 		}
 		else if(contains(sql,"(create user)")){
-			System.out.println("2)匹配正则表达式：create user");
+			System.out.println("进入sqlparser：create user");
 			tmp=new Cre_User_P(sql);
 		}
 		else if(contains(sql,"(alter table)(.+)(add)")){
-			System.out.println("2)匹配正则表达式：add");
+			System.out.println("进入sqlparser：add");
 			tmp=new Add_Tb_P(sql);
 
 		}
 		//[[alter table, tablename], [drop, conlums]]
 		else if(contains(sql,"(alter table)(.+)(drop)")){
-			System.out.println("2)匹配正则表达式：delete table");
+			System.out.println("进入sqlparser：delete table");
 			tmp=new Drp_Tb_P(sql);
 
 		}//
 		else if(contains(sql,"(alter table)(.+)(modify)")){
-			System.out.println("2)匹配正则表达式：modify table");
+			System.out.println("进入sqlparser：modify table");
 			tmp=new Mod_Tb_P(sql);
 
 		}
 
 		else if(contains(sql,"(rename table)")){
-			System.out.println("2)匹配正则表达式：rename table");
+			System.out.println("进入sqlparser：rename table");
 			tmp=new Re_Tb_P(sql);
 		}
 		else
