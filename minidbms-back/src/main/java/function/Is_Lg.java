@@ -1,5 +1,5 @@
 package function;
-
+//zjb
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -69,40 +69,5 @@ public class Is_Lg {
         String last_file_num=element.getText();
         //返回写入对象名
         return last_file_num;
-    }
-    //判断一个表是否建立了主键索引
-    public static boolean hasIndex(String dbName,String tbName) throws DocumentException {
-        File file=new File("./minidata/"+dbName+"/"+tbName+"/"+tbName+"-config.xml");
-        SAXReader saxReader=new SAXReader();
-        Document document=saxReader.read(file);
-        Element element= (Element) document.getRootElement().selectSingleNode("index");
-
-        if(element.getText().equals("1")){
-            return true;
-        }
-
-        return false;
-
-    }
-    //判断是不是通过主键查询
-    public static boolean isIndex(File file,String key) throws DocumentException {
-        SAXReader saxReader=new SAXReader();
-        Document document=saxReader.read(file); // 使用SAXReader读取指定文件，并将解析结果赋值给Document对象
-        Element element= (Element) document.getRootElement().selectSingleNode("index_name");
-        if(element.getText().equals(key)){
-            return true;
-        }
-        return false;
-    }
-    //判断是否需要load index
-    public static boolean need_loadIndex() throws DocumentException {
-        File file=new File("./minidata/index.xml");
-        SAXReader saxReader=new SAXReader();
-        Document document=saxReader.read(file);
-        Element root=document.getRootElement();
-        if(root.elementIterator().hasNext()){
-            return true;
-        }
-        return false;
     }
 }

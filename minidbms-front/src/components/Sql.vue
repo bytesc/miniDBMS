@@ -203,7 +203,7 @@ const getTableData = async ()=>{
                        v-if="SqlStatement.content.match('select') && CurTableName!==''"
             ><el-icon><Plus /></el-icon> 添加</el-button>
 
-            <el-table stripe :data="tableData" max-height="500">
+            <el-table stripe :data="tableData" max-height="400">
               <el-table-column fixed="left" label="" width="60"
                                v-if="SqlStatement.content==='show databases;'">
                 <template #default="scope">
@@ -275,13 +275,13 @@ const getTableData = async ()=>{
 <!--          <el-col :span="16" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>-->
 <!--          <el-col :span="8" class="foot-item"><div class="grid-content ep-bg-purple"></div></el-col>-->
 <!--        </el-row>-->
-        <el-row :gutter="20">
-          <el-col :span="1" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
-          <el-col :span="22" class="foot-item"><div class="grid-content ep-bg-purple" >
-            <p style="text-align: center; color: #888888">组长:庄家宝 前端:任辰宇 后端:史海云 数据库:谈伽辉 文档:林金锐</p>
-          </div></el-col>
-          <el-col :span="1" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>
-        </el-row>
+<!--        <el-row :gutter="20">-->
+<!--          <el-col :span="1" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>-->
+<!--          <el-col :span="22" class="foot-item"><div class="grid-content ep-bg-purple" >-->
+<!--            <p style="text-align: center; color: #888888"></p>-->
+<!--          </div></el-col>-->
+<!--          <el-col :span="1" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>-->
+<!--        </el-row>-->
         <el-row :gutter="20" >
           <el-col :span="4" class="foot-bottom"><div class="grid-content ep-bg-purple" ></div></el-col>
           <el-col :span="16" class="foot-bottom"><div class="grid-content ep-bg-purple" >

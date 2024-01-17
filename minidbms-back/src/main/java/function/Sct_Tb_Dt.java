@@ -1,6 +1,5 @@
 package function;
-
-import bpulstree.BPlusTree;
+//tjh
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
@@ -38,13 +37,8 @@ public class Sct_Tb_Dt {
             else {
                 String[] key_value = condition.get(1).split("=");
                 String key = key_value[0];
-                //如果表没有建立主键索引或者不是通过主键查询，调用未创建索引的方法
-                if (!Is_Lg.hasIndex(dbName, tbName) || !Is_Lg.isIndex(config_file, key)) {
-                   returnList = selectAllFromTb(dbName, tbName, condition);
-                } else {
-                    System.out.println("带索引的查询");
-                    selectWithIndex(dbName, tbName, condition);
-                }
+                //查询
+               returnList = selectAllFromTb(dbName, tbName, condition);
             }
         }
         //列名称不为空，则查询语句为select 列名称1，列名称2 from 表名 where 列名称=列值/select 列名称1，列名称2 from 表名
@@ -58,12 +52,7 @@ public class Sct_Tb_Dt {
                 String[] key_value = condition.get(1).split("=");
                 String key = key_value[0];
                 //如果表没有建立主键索引或者不是通过主键查询，调用未创建索引的方法
-                if (!Is_Lg.hasIndex(dbName, tbName) || !Is_Lg.isIndex(config_file, key)) {
-                    returnList = selectFromTb(dbName, tbName, columns, condition);
-                } else {
-                    System.out.println("带索引的查询");
-                    selectWithIndex(dbName, tbName, columns, condition);
-                }
+                returnList = selectFromTb(dbName, tbName, columns, condition);
             }
         }
         return returnList;
@@ -520,108 +509,4 @@ public class Sct_Tb_Dt {
 
         return returnList;
     }
-
-    //建立索引后的查询select 列名称1，列名称2 from 表名 where 列名称=列值
-    public static void selectWithIndex(String dbName, String tbName, List<String> tmp1, List<String> tmp2) throws DocumentException {
-        //存where条件的condition数组
-        String[] condition = new String[0];
-        condition = tmp2.get(1).split("=");
-        int key = Integer.parseInt(condition[1]);
-        //找到该表索引对应的B+树
-        BPlusTree myTree = Cre_Id.findTree(tbName);
-        String filename = myTree.search(key);
-        boolean condition_find = false;
-        boolean element_find = false;
-
-        File file = new File("./minidata/" + dbName + "/" + tbName + "/" + filename + ".xml");
-        //解析XML
-        SAXReader reader = new SAXReader();
-        Document document = reader.read(file);
-        Element rootElement = document.getRootElement();
-
-        List<Node> nodes = rootElement.selectNodes(tbName);
-
-        for (Node node : nodes) {
-            Element node1 = (Element) node;
-            List<Attribute> list = node1.attributes();
-            for (Iterator i = list.iterator(); i.hasNext(); ) {
-                Attribute attribute = (Attribute) i.next();
-                if (attribute.getName().equals(condition[0]) && attribute.getText().equals(condition[1])) {
-                    condition_find = true;
-                    break;
-                }
-            }
-            //如果找到该条记录
-            if (condition_find) {
-                for (Iterator i = list.iterator(); i.hasNext(); ) {
-                    Attribute attribute = (Attribute) i.next();
-                    for (int k = 0; k < tmp1.size(); k++) {
-                        //如果找到要查询的列
-                        if (attribute.getName().equals(tmp1.get(k))) {
-                            element_find = true;
-                            System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
-                            break;
-                        }
-                    }
-                }
-                System.out.println();
-                break;
-            }
-        }
-        if (!condition_find) {
-            System.out.println("查询失败，未找到记录");
-            return;
-
-        }
-        if (condition_find && !element_find) {
-            System.out.println("查询失败，未找到列");
-        }
-    }
-
-    //建立索引后的查询select * from 表名 where 列名称=列值
-    public static void selectWithIndex(String dbName, String tbName, List<String> tmp1) throws DocumentException {
-        //存where条件的condition数组
-        String[] condition = tmp1.get(1).split("=");
-        int key = Integer.parseInt(condition[1]);
-        //找到索引的B+树
-        BPlusTree myTree = Cre_Id.findTree(tbName);
-        String filename = myTree.search(key);
-        boolean condition_find = false;
-
-        File file = new File("./minidata/" + dbName + "/" + tbName + "/" + filename + ".xml");
-        //解析XML
-        SAXReader reader = new SAXReader();
-        Document document = reader.read(file);
-        Element rootElement = document.getRootElement();
-
-        List<Node> nodes = rootElement.selectNodes(tbName);
-
-        for (Node node : nodes) {
-            Element node1 = (Element) node;
-            List<Attribute> list = node1.attributes();
-            for (Iterator i = list.iterator(); i.hasNext(); ) {
-                Attribute attribute = (Attribute) i.next();
-                if (attribute.getName().equals(condition[0]) && attribute.getText().equals(condition[1])) {
-                    condition_find = true;
-                    break;
-                }
-            }
-            if (condition_find) {
-                for (Iterator i = list.iterator(); i.hasNext(); ) {
-                    Attribute attribute = (Attribute) i.next();
-                    System.out.print(attribute.getName() + "=" + attribute.getText() + " ");
-                }
-                System.out.println();
-                break;
-            }
-        }
-        if (!condition_find) {
-            System.out.println("未找到记录");
-            return;
-
-        }
-
-    }
-
-
 }

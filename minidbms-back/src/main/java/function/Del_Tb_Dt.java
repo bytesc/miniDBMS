@@ -1,7 +1,5 @@
 package function;
-
-import bpulstree.BPlusTree;
-import bpulstree.Main;
+//rcy
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 
@@ -33,42 +31,23 @@ public class Del_Tb_Dt {
         String key=key_value[0];
         //find标记是否找到记录
         Boolean find = false;
-        //非主键查询删除
-        if(!Is_Lg.isIndex(config_file,key)) {
-            for (int j = Integer.parseInt(write_file_last_num); j >= 0; j--) {
-                //设置变量traverse_file用来遍历表的所有文件
-                String last_num = "" + j;
-                //创建写入对象，创建sax解析器，document对象，获得root节点
-                File file = new File("./minidata/" + dbName + "/" + tbName + "/" + tbName + last_num + ".xml");
-                find=delete(file,dbName,tbName,key_value,last_num);
-                if(find){
-                    map.put("result", "删除完成");
-                    return returnList;
-                }
-            }
-            System.out.println("没有找到要删除的记录");
-            map.put("result", "没有找到要删除的记录");
-            return returnList;
-        }
-        //主键查询删除
-        else {
-            BPlusTree tree= Cre_Id.findTree(tbName);
-            String file_name=tree.search(Integer.parseInt(key_value[1]));
-            String num=file_name.substring(file_name.length()-1,file_name.length());
-            File file=new File("./minidata/"+dbName+"/"+tbName+"/"+file_name+".xml");
-            find=delete(file,dbName,tbName,key_value,num);
-            //删除数据后更新索引
-            if(find) {
-                Cre_Id.updateIndex_delete(tbName, key_value[1]);
+
+        for (int j = Integer.parseInt(write_file_last_num); j >= 0; j--) {
+            //设置变量traverse_file用来遍历表的所有文件
+            String last_num = "" + j;
+            //创建写入对象，创建sax解析器，document对象，获得root节点
+            File file = new File("./minidata/" + dbName + "/" + tbName + "/" + tbName + last_num + ".xml");
+            find=delete(file,dbName,tbName,key_value,last_num);
+            if(find){
                 map.put("result", "删除完成");
                 return returnList;
             }
-            System.out.println("没有找到要删除的记录");
-            map.put("result", "没有找到要删除的记录");
-            return returnList;
         }
+        System.out.println("没有找到要删除的记录");
+        map.put("result", "没有找到要删除的记录");
+        return returnList;
     }
-    //主键删除用delete方法
+    //删除用delete方法
     public static boolean delete(File file,String dbName,String tbName,String[] key_value,String last_num) throws DocumentException, IOException {
         SAXReader reader = new SAXReader();
         Document document = reader.read(file);

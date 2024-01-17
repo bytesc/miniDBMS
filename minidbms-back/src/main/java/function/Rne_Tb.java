@@ -1,5 +1,5 @@
 package function;
-
+//tjh
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Rne_Tb {
-    //create database 数据库名称
     public static List<Map<String, String>> renametable(String oldtbName,String tbName,String dbName){
         List<Map<String, String>> returnList = new ArrayList<Map<String, String>>();
 
