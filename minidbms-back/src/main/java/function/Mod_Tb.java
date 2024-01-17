@@ -37,17 +37,11 @@ public class Mod_Tb {////[[alter table, tablename], [drop, conlums]]
             Attribute idAttr;
             idAttr = rootElement.element(tbName).attribute(oldconlum);
             for (Node node : nodes) {
-                //Attribute idAttr=
+                String Name=((Element)node).attributeValue(oldconlum);
                 ((Element)node).remove(idAttr);
-                System.out.println((Element)node);
+                ((Element)node).addAttribute(newconlum,Name);
             }
-            Cre_Tb.writeIO(file,document);
 
-            for (Node node : nodes) {
-
-                ((Element) node).addAttribute(newconlum," ");
-                // System.out.println((Element)node);
-            }
             Cre_Tb.writeIO(file,document);
 
         }
