@@ -169,21 +169,6 @@ const getTableData = async ()=>{
       >
         <el-menu-item index="1"><h1><strong>MiniDBMS</strong></h1></el-menu-item>
         <div class="flex-grow" />
-<!--        <el-menu-item index="1">Processing Center</el-menu-item>-->
-<!--        <el-sub-menu index="2" v-if="DatabaseName!==''">-->
-<!--          <template #title>{{ DatabaseName }}</template>-->
-<!--          <el-menu-item index="2-1" @click="handleTableRowOp(tableName)"-->
-<!--          v-if="tableName!==''">-->
-<!--            {{ tableName }}</el-menu-item>-->
-<!--          <el-menu-item index="2-2">item two</el-menu-item>-->
-<!--          <el-menu-item index="2-3">item three</el-menu-item>-->
-<!--          <el-sub-menu index="2-4">-->
-<!--            <template #title>item four</template>-->
-<!--            <el-menu-item index="2-4-1">item one</el-menu-item>-->
-<!--            <el-menu-item index="2-4-2">item two</el-menu-item>-->
-<!--            <el-menu-item index="2-4-3">item three</el-menu-item>-->
-<!--          </el-sub-menu>-->
-<!--        </el-sub-menu>-->
       </el-menu>
     </el-header>
 
@@ -271,17 +256,6 @@ const getTableData = async ()=>{
 
       </el-main>
       <el-footer style="padding: 0">
-<!--        <el-row :gutter="20">-->
-<!--          <el-col :span="16" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>-->
-<!--          <el-col :span="8" class="foot-item"><div class="grid-content ep-bg-purple"></div></el-col>-->
-<!--        </el-row>-->
-<!--        <el-row :gutter="20">-->
-<!--          <el-col :span="1" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>-->
-<!--          <el-col :span="22" class="foot-item"><div class="grid-content ep-bg-purple" >-->
-<!--            <p style="text-align: center; color: #888888"></p>-->
-<!--          </div></el-col>-->
-<!--          <el-col :span="1" class="foot-item"><div class="grid-content ep-bg-purple" ></div></el-col>-->
-<!--        </el-row>-->
         <el-row :gutter="20" >
           <el-col :span="4" class="foot-bottom"><div class="grid-content ep-bg-purple" ></div></el-col>
           <el-col :span="16" class="foot-bottom"><div class="grid-content ep-bg-purple" >

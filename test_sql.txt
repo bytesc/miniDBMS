@@ -1,0 +1,23 @@
+1.展示数据库：show databases;
+2.创建数据库：create database test1; show databases;
+3.使用数据库：use database test1;
+4.创建列表：create table test (id varchar(20)key,name varchar(20)null);
+5.展示数据库中所有表：show tables;
+6.展示表中数据：select * from test;
+7.插入数据：
+insert into test(id,name) values(001,ceshi);
+insert into test(id,name) values(002,ceshi2);
+insert into test(id,name) values(003,ceshi3);
+select * from test;
+8.增加表字段：alter table test add price=int; select * from test;
+9.删除表字段：alter table test drop price; select * from test;
+10.修改表字段：alter table test modify name=newname; select * from test;
+11.删除表中数据：delete from test where id=003; select * from test;
+12.更新表中数据：update test set name=ceshi3 where id=001; select * from test;
+13.条件查询表中数据：select * from test where id=001;
+14.投影查询：select name from test;
+15.条件投影查询：select name from test where id=001;
+16.修改表名：rename table test=newtest;   show tables;
+17.多表条件查询：select * from category,vegetable where id=id;
+18.多表条件投影查询：select price_num,name,id from category,vegetable where id=id;
+19.删除数据库：drop table newtest;drop database test1;
